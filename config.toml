@@ -19,7 +19,7 @@ build_search_index = true
 
 # Navigation bar menu
 navbar = [
-	{name = "Research", url = "/research"},
-	{name = "Projects", url = "/projects"},
+	{name = "Research", url = "research"},
+	{name = "Projects", url = "projects"},
 	{name = "Posts", url = "#"},
 ]

@@ -6,7 +6,7 @@ name = "Matthieu Pizenberg"
 pronouns = "he/him"
 title = "Ph.D. Student"
 organizations = ["Enseeiht Toulouse", "A*Star Singapore"]
-thumbnail = "/profile-roma-128x128.jpg"
+thumbnail = "profile-roma-128x128.jpg"
 
 # Using material design icons: https://materialdesignicons.com
 social = [

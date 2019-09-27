@@ -12,7 +12,7 @@ links = [
     {name = "Poster", url = "https://mpizenberg.github.io/resources/otis/poster-mm17.pdf"},
     {name = "Demo", url = "http://mm17-otis.pizenberg.fr/"}
 ]
-header = "/acmmm_17.jpg"
+header = "acmmm_17.jpg"
 +++
 
 ### Abstract

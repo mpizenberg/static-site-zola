@@ -10,7 +10,7 @@ links = [
     {name = "Paper", url = "https://www.irit.fr/~Jean-Denis.Durou/PUBLICATIONS/qcav_2017.pdf"},
     {name = "Code", url = "https://github.com/yqueau/microgeometry_ps"},
 ]
-header = "/qcav_17.jpg"
+header = "qcav_17.jpg"
 +++
 
 ### Abstract

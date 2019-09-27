@@ -6,8 +6,8 @@ template = "project-item.html"
 [extra]
 authors = ["Matthias Benkort", "Nicolas Gaboris", "Arthur Manoha", "Matthieu Pizenberg", "Louis Viot"]
 teaser = "MVG (Multiple View Geometry) Assistant Tool for Reconstruction from Images eXtraction"
-thumbnail = "/matrix_128.png"
-header = "/matrix_header.png"
+thumbnail = "matrix_128.png"
+header = "matrix_header.png"
 links = [
     {name = "Code", url = "https://github.com/mpizenberg/MATRIX"},
     {name = "Documentation", url = "https://oeufsdepie.github.io/MATRIX/index.html"},

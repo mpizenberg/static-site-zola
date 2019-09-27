@@ -6,8 +6,8 @@ template = "project-item.html"
 [extra]
 authors = ["Thomas Forgione", "Matthieu Le Boucher", "Matthieu Pizenberg"]
 teaser = "An attempt to make a modern alternative to LaTeX"
-thumbnail = "/spandex_128.png"
-# header = "/spandex_header.png"
+thumbnail = "spandex_128.png"
+# header = "spandex_header.png"
 links = [
     {name = "Book", url = "https://rust-spandex.github.io/"},
     {name = "Code", url = "https://github.com/rust-spandex/spandex"},
@@ -94,7 +94,7 @@ ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 This is what SpanDeX will generate from the example:
 
-![](/spandex.png)
+![](spandex.png)
 
 ### Try it
 
