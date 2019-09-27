@@ -1,0 +1,34 @@
+{% import "macros.html" as macros %}
+
+{% extends "projects.html" %}
+{% block title %}{{ super() }} - {{ page.title }}{% endblock title %}
+
+{% block content %}
+
+{% if page.extra.header %}
+<section class="hero">
+	<figure class="image">
+	<img src="{{ page.extra.header }}">
+	</figure>
+</section>
+{% endif %}
+
+<section class="section">
+<div class="container">
+<h1 class="title is-4">{{ page.title }}</h1>
+
+<p class="subtitle is-5">
+<em>{{ page.extra.authors | join(sep=", ") }}</em><br>
+{{ page.extra.teaser }}<br>
+</p>
+
+<p>{% for link in page.extra.links %}
+<span class="tag"><a href="{{ link.url }}">{{ link.name }}</a></span>
+{% endfor %}</p>
+
+<div class="research-content content">{{ page.content | safe }}</div>
+
+</div>
+</section>
+
+{% endblock content %}

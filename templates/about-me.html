@@ -1,0 +1,37 @@
+{% import "macros.html" as macros %}
+
+{% extends "base.html" %}
+{% block title %}{{ super() }} - About me{% endblock title %}
+
+{% block content %}
+<div class="section">
+<div class="container">
+<div class="media">
+	<figure class="picture-me media-left">
+		<p class="image">
+		<img class="is-rounded" src="{{ page.extra.thumbnail }}">
+		</p>
+	</figure>
+	<div class="media-content">
+		<h1 class="title">{{ page.extra.name }}</h1>
+		<h2 class="subtitle">
+			{% if page.extra.pronouns %}{{ page.extra.pronouns }},{% endif %}
+			{{ page.extra.title }},
+			{{ page.extra.organizations | join(sep=", ") }}
+		</h2>
+		<div>
+		{% for social in page.extra.social %}
+		{{ macros::icon(icon=social.icon, url=social.url) }}
+		{% endfor %}
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+<div class="container"><hr class="hr"></div>
+
+<div class="section">
+<div class="container content">{{ page.content | safe }}</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% import "macros.html" as macros %}
+
+{% extends "base.html" %}
+{% block title %}{{ super() }} - Projects{% endblock title %}
+
+{% block content %}
+<div class="section">
+<div class="container">
+<ul>
+{% for page in section.pages %}
+{{ macros::project_item_small_box(item = page) }}
+{% endfor %}
+</ul>
+</div>
+</div>
+{% endblock content %}

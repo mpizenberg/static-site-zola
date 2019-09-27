@@ -1,0 +1,38 @@
+{% macro research_item_small(item) %}
+<li class="content">
+	<a href="{{ item.permalink }}"><strong>{{ item.title }}</strong></a><br>
+	<em>{{ item.extra.authors | join(sep=", ") }}</em><br>
+	{{ item.extra.publication }}<br>
+	{% for link in item.extra.links %}
+	<span class="tag"><a href="{{ link.url }}">{{ link.name }}</a></span>
+	{% endfor %}
+</li>
+{% endmacro research_item_small %}
+
+
+{% macro project_item_small_box(item) %}
+<li class="box">
+	<article class="media">
+		<div class="media-left">
+			<figure class="image">
+				<img src="{{ item.extra.thumbnail }}" alt="Image">
+			</figure>
+		</div>
+		<div class="media-content content">
+			<a href="{{ item.permalink }}"><strong>{{ item.title }}</strong></a><br>
+			<em>{{ item.extra.authors | join(sep=", ") }}</em><br>
+			{{ item.extra.teaser }}<br>
+			{% for link in item.extra.links %}
+			<span class="tag"><a href="{{ link.url }}">{{ link.name }}</a></span>
+			{% endfor %}
+		</div>
+	</article>
+</li>
+{% endmacro project_item_small_box %}
+
+
+{% macro icon(icon, url) %}
+<span class="icon is-large">
+	<a href="{{ url }}"><i class="mdi mdi-36px mdi-{{ icon }}"></i></a>
+</span>
+{% endmacro icon %}
