@@ -1,3 +1,8 @@
+{% if section %}
+	{% set path = section.path %}
+{% elif page %}
+	{% set path = page.path %}
+{% endif %}
 <nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
 	<div class="navbar-brand">
 		<a class="navbar-item" href="{{ config.base_url }}">{{ config.title }}</a>
@@ -7,7 +12,12 @@
 		</div>
 		<div class="navbar-end">
 			{% for item in config.extra.navbar %}
-			<a class="navbar-item" href="{{ config.base_url }}/{{item.url}}">{{item.name}}</a>
+			{% if path == item.url %}
+				{% set isActive = " is-active" %}
+			{% else %}
+				{% set isActive = "" %}
+			{% endif %}
+			<a class="navbar-item{{ isActive }}" href="{{ config.base_url }}/{{ item.url }}">{{item.name}}</a>
 			{% endfor %}
 		</div>
 	</div>

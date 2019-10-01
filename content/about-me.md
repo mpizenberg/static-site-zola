@@ -1,5 +1,6 @@
 +++
 template = "about-me.html"
+title = "About me"
 
 [extra]
 name = "Matthieu Pizenberg"
