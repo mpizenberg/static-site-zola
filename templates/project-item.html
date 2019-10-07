@@ -20,6 +20,7 @@
 <p class="subtitle is-5">
 <em>{{ page.extra.authors | join(sep=", ") }}</em><br>
 {{ page.extra.teaser }}<br>
+{% if page.year %}{{page.year}}<br>{% endif %}
 </p>
 
 <p>{% for link in page.extra.links %}

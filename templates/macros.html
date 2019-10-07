@@ -20,6 +20,7 @@
 			<a href="{{ item.permalink }}"><strong>{{ item.title }}</strong></a><br>
 			<em>{{ item.extra.authors | join(sep=", ") }}</em><br>
 			{{ item.extra.teaser }}<br>
+			{% if item.year %}{{item.year}}<br>{% endif %}
 			{% for link in item.extra.links %}
 			<span class="tag"><a href="{{ link.url }}">{{ link.name }}</a></span>
 			{% endfor %}
