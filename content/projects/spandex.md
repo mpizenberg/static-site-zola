@@ -17,56 +17,44 @@ links = [
 
 ### TL;DR
 
-SpanDeX is an attempt to rewrite LaTeX. It aims at having a simple language, clear and precise error messages, beautiful error message, and producing document as beautiful as LaTeX's.
+SpanDeX is an attempt at a better LaTeX.
+It aims to build beautiful documents fast,
+with great error messages when compilation fails.
 
-### History
+### Motivation
 
-SpanDeX is an attempt to rewrite LaTeX. It started with the following observations:
+It started with the following observations:
 
 - LaTeX has many advantages:
   - LaTeX produces magnficient PDFs
   - LaTeX displays beautiful mathematic formulas
   - LaTeX has a really nice justification algorithm
-  - LaTeX is widely used, particularly in the science field
+  - LaTeX is widely used, especially in science
 - but it also have major problems
-  - LaTeX language is very verbose and cumbersome
-  - LaTeX command line program is really verbose
-  - Debugging LaTeX is really painful
-  - LaTeX is a really heavy program with many packages
+  - LaTeX compilation is extremely verbose
+  - Debugging LaTeX code is really painful
+  - LaTeX packages and dependencies are a mess
 
-After spending much time writing code in Rust, with its safety and nice error messages, it's more and more painful going back to other languages, including LaTeX, even if the frustration from having any non-LaTeX quality document is enough to force me to use LaTeX.
-
-So I started searching alternatives, and I found a few that produce beautiful output
-
-- [Patoline][patoline]
-- [Sile][sile]
+After experiencing languages with great error messages such as Rust or Elm,
+going back to other languages such as LaTeX is really painful
+and frustrating due to the lack of alternatives.
+Few open source typesetting systems exist such as
+[Patoline][patoline] (not very mature) and [Sile][sile],
+but it will be more fun to make one of our own in Rust.
+There exists already some Rust crates to generate pdf documents,
+such as [pdf-canvas][pdf-canvas] and [printpdf][printpdf] that we are using.
 
 [patoline]: http://patoline.org/
 [sile]: http://sile-typesetter.org/
-
-but they are quite young and don't really fit my needs.
-
-And, (as always), I thought to myself: "Why don't I rewrite this?"
-
-So I started to look at some Rust crates to generate PDFs,
-and I also found a few ([pdf-canvas][pdf-canvas] and [printpdf][printpdf]) and I gave printpdf a try.
-I started writing simple sentences at the very top of an A4 page,
-then I introduced automatic line breaking,
-then I added some margins to the document and I finally wrote a naive justifier,
-that writes text on a line until it requires a line break,
-and fairly shares the remaining space between words.
-I hyped a friend about this and that's how everything started.
-
-Then, I started writing a parser for a simple language,
-and my hyped friend reimplemented the LaTeX's algorithm for justification,
-and we're making a little progress. We're quite excited to see where this goes.
-
 [pdf-canvas]: https://crates.io/crates/pdf-canvas
 [printpdf]: https://crates.io/crates/printpdf
 
 ### Language
 
-Of course, if we want to rewrite LaTeX, we need a language. After discussing with friends, we chose to make a markdown-like language, and in the future, extend it with template-style syntax. For example, this can be a typical SpanDeX source:
+Of course, if we want to rewrite LaTeX, we need a language.
+For now, we chose to make a markdown-like language,
+and maybe in the future, extend it with template-style syntax.
+Currently, a typical SpanDeX source code looks like follows.
 
 ```txt
 # Hello world
@@ -90,15 +78,14 @@ aliqua/. Ut enim ad minim veniam, quis nostrud exercitation
 ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
 
-### Output
-
-This is what SpanDeX will generate from the example:
+And is rendered as follows.
 
 ![](spandex.png)
 
 ### Try it
 
-All the instructions are described one the [homepage][homepage] but to put it simply, you need to:
+All the instructions are available on the [homepage][homepage].
+Briefly, you need to:
 
 - install rust (`curl -sSf https://sh.rustup.rs | sh`)
 - install spandex (`cargo install spandex`)
@@ -106,17 +93,19 @@ All the instructions are described one the [homepage][homepage] but to put it si
 - go to the generated example (`cd example`)
 - build the pdf (`spandex build`)
 
-The output will be saved to `output.pdf`,
-and you can have fun with your `main.dex` file and re-running `spandex build`.
+The output will be saved to `output.pdf`.
+You can play with the `main.dex` file and re-run `spandex build`.
 
 [homepage]: https://rust-spandex.github.io/
 
 ### Long term future
 
-There are some basic features that will need to be included (like lists, code blocks, includes, images, etc...) but here are some features that we would like to have on the long term:
+Some basic features will need to be supported such as
+includes, lists, code blocks, maths and images.
+Here are some features that we would also like to have on the long term:
 
-- vector graphics like TikZ, or possibility to include SVG
-- possibility to write plugins in Rust
+- vector graphics like TikZ, or ability to include SVG
+- ability to write plugins in Rust / WebAssembly
 - parallel compilation
 - incremental compilation
-- online editor using WASM
+- online editor using
