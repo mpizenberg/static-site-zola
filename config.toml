@@ -19,8 +19,8 @@ build_search_index = true
 
 # Navigation bar menu
 navbar = [
-	{name = "Hire me", url = "hire-me/"},
-	{name = "Research", url = "research/"},
+	{name = "Posts", url = "posts/"},
 	{name = "Projects", url = "projects/"},
-	{name = "Posts", url = "#"},
+	{name = "Research", url = "research/"},
+	{name = "Hire me", url = "hire-me/"},
 ]

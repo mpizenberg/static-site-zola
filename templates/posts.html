@@ -1,0 +1,16 @@
+{% import "macros.html" as macros %}
+
+{% extends "base.html" %}
+{% block title %}{{ super() }} - Posts{% endblock title %}
+
+{% block content %}
+<div class="section">
+<div class="container">
+<ul>
+{% for page in section.pages %}
+{{ macros::post_trailer(post = page) }}
+{% endfor %}
+</ul>
+</div>
+</div>
+{% endblock content %}
