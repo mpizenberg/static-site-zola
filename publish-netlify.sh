@@ -3,7 +3,7 @@
 # CF publish-gh-pages for this script doc.
 
 set -e
-zola build --base-url https://matthieu.pizenberg.fr
+zola build --base-url ""
 cd netlify
 git reset --hard 36ffc4fbe
 cp -rH ../public/* .
