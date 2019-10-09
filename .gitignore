@@ -1,2 +1,6 @@
+# build artifacts
 public
+
+# subdirectory worktrees
 gh-pages-static
+netlify
