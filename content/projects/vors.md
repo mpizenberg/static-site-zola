@@ -6,8 +6,8 @@ template = "project-item.html"
 [extra]
 authors = ["Matthieu Pizenberg"]
 teaser = "Pure Rust visual odometry algorithm for RGB-D camera tracking"
-thumbnail = "mockup.png"
-# header = "header.png"
+thumbnail = "vors-3d.png"
+header = "vors-3d-header.png"
 links = [
     {name = "Code", url = "https://github.com/mpizenberg/visual-odometry-rs"},
 ]
