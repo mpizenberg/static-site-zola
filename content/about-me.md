@@ -21,27 +21,36 @@ social = [
 ]
 +++
 
-Hi! My name is Matthieu and I’m a French Ph.D. student located in Toulouse.
+Hi, my name is **Matthieu** and I’m a **French Ph.D. student** living in Toulouse.
 I’ve always been passionate about science and technology!
 Quite early, I was spending hours on building Lego and Meccano constructions.
-These days I’m more focused on digital content,
-but still love getting my hands dirty for some robotics side project.
+These days I’m more focused on digital content (programming),
+but still love getting my hands dirty for some **robotics side project**.
 
-In my work, I deal with computer vision and multimedia.
-I’ve also had a growing interest for functional programming and machine learning.
-
-In addition, I strongly believe in sharing knowlegde and open source communities
+In my work, I deal with **computer vision and multimedia**.
+I strongly believe in sharing knowlegde and open source communities
 so I try my best making all my research content easily available online.
 
-### Interests
+I’ve also had a growing interest for **functional programming**,
+and for the [Elm][elm] programming language in particular.
+This is the friendliest language for newcommers I've ever encountered,
+so thank you Evan for that!
+To give back to the community, I used to co-organize
+the Elm Singapore meetups with the amazing [Mads][elm-sg].
+Now I'm co-organizing the **Elm Toulouse** meetups with my bro [Matthias][elm-toulouse],
+and also co-maintaining the [Exercism Elm][elm-exercism] track.
 
-- Computer Vision
-- Multimedia
-- Robotics
-- Tennis
-- Raclette
+[elm]: https://elm-lang.org/
+[elm-sg]: https://www.meetup.com/Elm-Singapore/members/25220742/
+[elm-toulouse]: https://www.meetup.com/Elm-Toulouse/members/190445692/
+[elm-exercism]: https://exercism.io/tracks/elm
 
-### Education
+When I'm not programming, I like spending time with friends
+playing board games and eating [raclette][raclette]!
+I also enjoy playing football and a new discovery to me, [kin-ball][kinball].
+This is a really original sport because there are three teams competing
+on the field instead of the classic two.
+Give it a try if you are lucky enought to live near a kin-ball club!
 
-- Engineer in IT and applied mathematics, 2015  
-  _ENSEEIHT, Toulouse, France_
+[raclette]: https://fr.wikipedia.org/wiki/Raclette
+[kinball]: https://en.wikipedia.org/wiki/Kin-Ball
