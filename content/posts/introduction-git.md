@@ -23,15 +23,15 @@ but I keep only vital information.
 ### Table of contents of the document
 
 1. Getting Started
-	1. About Version Control
-	2. Bit Basics
-	3. First-Time Git Setup
+    1. About Version Control
+    2. Git Basics
+    3. First-Time Git Setup
 2. Git Basics
-	1. Getting a Git Repository
-	2. Recording Changes to the Repository
-	3. Viewing the Commit History
-	4. Undoing Things
-	5. Working with Remotes
+    1. Getting a Git Repository
+    2. Recording Changes to the Repository
+    3. Viewing the Commit History
+    4. Undoing Things
+    5. Working with Remotes
 3. Git Branching
-	1. Branches in a Nutshell
-	2. Basic Branching and Merging
+    1. Branches in a Nutshell
+    2. Basic Branching and Merging
