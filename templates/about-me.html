@@ -6,7 +6,7 @@
 {% block content %}
 <div class="section">
 <div class="container">
-<div class="columns">
+<div class="columns is-centered">
 	<figure class="column is-half-mobile is-3-tablet is-2-desktop has-text-centered">
 		<p class="image">
 		<img class="is-rounded" src="{{ page.extra.thumbnail }}">
@@ -32,6 +32,10 @@
 <div class="container"><hr class="hr"></div>
 
 <div class="section">
-<div class="container content">{{ page.content | safe }}</div>
+<div class="container content">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">{{ page.content | safe }}</div>
+</div>
+</div>
 </div>
 {% endblock content %}
