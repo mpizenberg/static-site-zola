@@ -6,13 +6,13 @@ Companies usually make a list of experience and requirements with job offers.
 Very often unrealistic, but they have the advantage of setting a goal,
 a target for the perfect candidate.
 Let's try to do the same, in reverse!
-**Here is my perfect company wishlist**.
+**Here are the traits of a company I would wholeheartedly work for.**.
 
 Turning light into digital images thanks to camera sensors,
 manipulating 3D data and visualizing it in mixed reality,
 it is amazing what we can do with technology today.
 I have always been fascinated by digital multimedia capabilities of machines.
-Maybe it is because I used to play a lot on gameboy, playstation, and computers.
+Maybe it is because I used to play a lot on gameboy, playstation, and PC.
 So if possible, **your company should work with 3D and multimedia data**.
 
 In this century, we are facing one of the greatest challenges for humanity,
@@ -70,18 +70,19 @@ So if possible, **your company should enable one day to work on
 less related open source projects**, or be flexible and be fine
 with non fulltime positions (like 4 days a week instead of 5).
 
-I could probably go on with an infinite list of wishes but if you are still reading
-I guess I can summarize the previous points with this perfect limited list:
+To sum up:
 
-- [ ] **work with multimedia data, especially 3D visual content**
-- [ ] **try to solve environmental challenges**
-- [ ] **use functional programming for the Web such as Elm**
-- [ ] **use modern languages such as Rust instead of C++**
-- [ ] **is open source friendly**
-- [ ] **is fine with 1 day of less related open source projects, or partial time positions**
+- **work with multimedia data, especially 3D visual content**
+- **try to solve environmental challenges**
+- **use functional programming for the Web such as Elm**
+- **use modern languages such as Rust instead of C++**
+- **is open source friendly**
+- **is fine with 1 day of less related open source projects, or partial time positions**
 
 Other bonus points:
 
- - [ ] make robots
- - [ ] babyfoot, ping pong table and or pool table
- - [ ] great salary
+ - make robots
+ - babyfoot, ping pong table and or pool table
+ - great salary
+
+**You do all that? Then let's make great things together!**
