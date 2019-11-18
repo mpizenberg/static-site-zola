@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - Elm Videoball</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Elm Videoball</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg, Nicolas Gaborit, Matthias Benkort, Thomas Forgione</em><br>
+Minimalist elm implementation of the game videoball (not affiliated to official game)<br>
+2018<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;elm-videoball">Code</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;elm-videoball&#x2F;">Game</a></span>
+</p>
+
+<div class="research-content content"><p>This is a minimalist elm implementation of the game <a href="http://videoball.net/">videoball</a>.
+You play by controlling a small triangle moving around and shooting
+bullets on the balls to make them move to the opposite goal
+or on the two opponent players to stall them temporarily.
+<strong>It is a lot of fun!</strong>
+You can play the game in your browser (currently only chrome) at
+<a href="https://mpizenberg.github.io/elm-videoball/">mpizenberg.github.io/elm-videoball</a>.
+It requires 4 human players, with 4 gamepad controllers.
+You can check that your gamepad controllers should work at
+<a href="https://html5gamepad.com/">html5gamepad.com</a>.</p>
+<blockquote>
+<p>This is not affiliated to the official game.
+If you like this game, you will very much like the original one.</p>
+</blockquote>
+<p><img src="https://mpizenberg.github.io/static-site-zola/projects/elm-videoball/elm-videoball.png" alt="" /></p>
+<p>This game is done using the <a href="https://elm-lang.org/">Elm programming language</a>.
+We made it for the fun and to show that it is quite easy to make games in Elm.
+It uses <a href="https://github.com/xarvh/elm-gamepad">elm-gamepad</a> to handle game controllers through ports,
+and <a href="https://howlerjs.com/">howler.js</a> through ports for sounds.
+The game is rendered in SVG.</p>
+<p>Regarding the architecture,
+objects that can have physical interactions with each other
+are in modules inside the <code>Physical/</code> directory.
+Other important data structures are in the <code>Data/</code> directory.
+Visuals are under the <code>Views/Svg/</code> directory.
+Have fun playing it!</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

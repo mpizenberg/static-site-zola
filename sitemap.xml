@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/about-me/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/hire-me/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/posts/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/posts/introduction-git/</loc>
+            
+                <lastmod>2017-06-18</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/chouette-mail/</loc>
+            
+                <lastmod>2019-02-08</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/distributed-computing/</loc>
+            
+                <lastmod>2016-09-04</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/elm-pointer-events/</loc>
+            
+                <lastmod>2018-02-17</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/elm-videoball/</loc>
+            
+                <lastmod>2018-09-19</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/lib-asserv-7robot/</loc>
+            
+                <lastmod>2014-05-20</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/matrix/</loc>
+            
+                <lastmod>2015-03-18</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/rgbd-tracking-evaluation/</loc>
+            
+                <lastmod>2019-03-20</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/rust-7trobot/</loc>
+            
+                <lastmod>2019-06-08</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/rust-p3p/</loc>
+            
+                <lastmod>2019-09-12</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/rust-png-decoder/</loc>
+            
+                <lastmod>2019-08-13</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/slidecast/</loc>
+            
+                <lastmod>2016-10-16</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/spandex/</loc>
+            
+                <lastmod>2019-09-27</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/projects/vors/</loc>
+            
+                <lastmod>2019-10-07</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/research/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/research/annotation-app/</loc>
+            
+                <lastmod>2018-10-22</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/research/microgeometry/</loc>
+            
+                <lastmod>2017-05-14</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/research/mooc/</loc>
+            
+                <lastmod>2019-03-20</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://mpizenberg.github.io/static-site-zola/research/outlining/</loc>
+            
+                <lastmod>2017-10-27</lastmod>
+            
+        </url>
+    
+</urlset>

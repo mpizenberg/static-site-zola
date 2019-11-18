@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://mpizenberg.github.io/static-site-zola/sitemap.xml

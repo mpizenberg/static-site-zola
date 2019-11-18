@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - Rust Photogrammetry P3P</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Rust Photogrammetry P3P</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg</em><br>
+Camera pose estimation given 3D points and corresponding pixel coordinates<br>
+2019<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;rust-photogrammetry&#x2F;p3p">Code</a></span>
+</p>
+
+<div class="research-content content"><p>This project is kind of a sub-project for interactive visual odometry.
+In order to provide an human interaction enabling re-alignement of drifted frames,
+we chose to use a P3P algorithm.
+The idea is simple, given a number of N points with 3D coordinates in a reference frame,
+if we provided the associated N 2D points in another frame,
+it is possible to estimate the camera transformation between the reference and second frame.
+These algorithms are called <strong><a href="https://en.wikipedia.org/wiki/Perspective-n-Point">&quot;Perspective-N-Point&quot;</a> or PNP</strong>,
+and 3 is the minimal amount of points required for the estimation.</p>
+<p>I've extracted this Rust implementation of P3P from the interactive visual odometry code base
+into the <strong><a href="https://github.com/rust-photogrammetry/p3p">Rust Photogrammetry</a> organization</strong> since it might be useful to others.</p>
+<p>In the interactive web application, a user can clic three points on two thumbnails.
+They are displayed purple, blue and green as shown in the following image.
+The left thumbnail is the reference frame.
+Points with known depth information are displayed in red,
+so the user should clic near those points because the code will associate
+the nearest known 3D point to the clic for the reference frame.
+On the right is the second frame.</p>
+<p><img src="https://mpizenberg.github.io/static-site-zola/projects/rust-p3p/p3p.jpg" alt="" /></p>
+<p>Once the third (green) point is associated in both images,
+we compute the possible camera transformations with P3P.
+There can be 0 to 4 solutions depending on the associated points.
+In order to pick the correct one for re-alignement,
+we display a projected point cloud in a different color for each potential solution.
+The red point cloud being the projection with the initial drifted camera pose.
+Below are two examples, one with two, the other with four potential solutions.</p>
+<p><img src="https://mpizenberg.github.io/static-site-zola/projects/rust-p3p/two-solutions.png" alt="" /></p>
+<p><img src="https://mpizenberg.github.io/static-site-zola/projects/rust-p3p/four-solutions.png" alt="" /></p>
+<p>The implementation is inspired by <a href="https://github.com/openMVG/openMVG/pull/1500">OpenMVG implementation</a> of
+&quot;Lambda Twist: An Accurate Fast Robust Perspective Three Point (P3P) Solver&quot;
+Persson, M. and Nordberg, K. ECCV 2018
+(reference implementation available on the <a href="https://github.com/midjji/lambdatwist-p3p">author github repository</a>).</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

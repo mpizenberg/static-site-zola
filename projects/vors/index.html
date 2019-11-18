@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - Visual Odometry in Rust (vors)</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;static-site-zola/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+<section class="hero">
+	<figure class="image">
+	<img src="vors-3d-header.png">
+	</figure>
+</section>
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Visual Odometry in Rust (vors)</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg</em><br>
+Pure Rust visual odometry algorithm for RGB-D camera tracking<br>
+2019<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;visual-odometry-rs">Code</a></span>
+</p>
+
+<div class="research-content content"><p>Currently, <strong>visual-odometry-rs</strong>, abreviated <strong>vors</strong>,
+provides a framework for direct RGB-D camera tracking.
+A research paper is intended but not finished yet.
+The code is available online on GitHub at <a href="https://github.com/mpizenberg/visual-odometry-rs">github.com/mpizenberg/visual-odometry-rs</a>.
+Self contained examples for usage of the API are available in the <code>examples/</code> directory.
+A readme is also present there for more detailed explanations on these examples.
+Have a look at <a href="https://github.com/mpizenberg/rgbd-tracking-evaluation">mpizenberg/rgbd-tracking-evaluation</a>
+for more info about the dataset requirements to run the binary program <code>vors_track</code>.
+The library is organized around four base namespaces:</p>
+<ul>
+<li><code>core::</code> Core modules for computing gradients, candidate points, camera tracking etc.</li>
+<li><code>dataset::</code> Helper modules for handling specific datasets.
+Currently only provides a module for TUM RGB-D compatible datasets.</li>
+<li><code>math::</code> Basic math modules for functionalities not already provided by <a href="https://www.nalgebra.org/">nalgebra</a>,
+like Lie algebra for so3, se3, and an iterative optimizer trait.</li>
+<li><code>misc::</code> Helper modules for interoperability, visualization, and other things that did
+not fit elsewhere yet.</li>
+</ul>
+<p>Initially, this repository served as a personal experimental sandbox for <strong>computer vision in <a href="https://www.rust-lang.org/">Rust</a></strong>.
+See for example my original questions on the rust <a href="https://users.rust-lang.org/t/computer-vision-in-rust/16198">discourse</a> and <a href="https://www.reddit.com/r/rust/comments/84s5zo/computer_vision_in_rust/">reddit channel</a>.
+Turns out I struggled a bit at first but then really liked the Rust way, compared to C++.</p>
+<p>As the name suggests, the focus is now on <a href="https://en.wikipedia.org/wiki/Visual_odometry">visual odometry</a>,
+specifically on the recent research field of direct visual odometry.
+A reasonable introduction is available in those <a href="http://wavelab.uwaterloo.ca/slam/2017-SLAM/Lecture14-Direct_visual_inertial_odometry_and_SLAM/slides.pdf">lecture slides</a>
+by Waterloo Autonomous Vehicles lab.
+This project initially aimed at improving on the work of <a href="https://github.com/JakobEngel/dso">DSO</a>
+by J. Engel et. al. but with all the advantages of using the <a href="https://www.rust-lang.org/">Rust programming language</a>,
+including:</p>
+<ul>
+<li><a href="https://msrc-blog.microsoft.com/2019/07/22/why-rust-for-safe-systems-programming/">C++ level of performance</a> without sacrificing code readability</li>
+<li><a href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html">No memory bug</a>, and much higher <a href="https://msrc-blog.microsoft.com/2019/07/18/we-need-a-safer-systems-programming-language/">code safety</a> and reliability</li>
+<li><a href="https://doc.rust-lang.org/cargo/">Friendly tooling and ecosystem</a>, no dependency issue, basically one-liner compilation and run</li>
+<li><a href="https://rustwasm.github.io/docs/book/">Best-in-class support for porting to the Web with WebAssembly</a></li>
+<li><a href="https://docs.rust-embedded.org/discovery/">Growing and mindful resources for porting to embedded systems</a></li>
+<li><a href="https://users.rust-lang.org/">Wonderful</a> <a href="https://www.reddit.com/r/rust/">community</a></li>
+</ul>
+<p>I didn't intend to rewrite everything from scratch.
+I spent literally months on dissecting DSO's code,
+trying to add improvements I had in mind,
+only to face memory crashes, unpredictable side effets of my additions
+to the previous code, and <a href="https://github.com/JakobEngel/dso/issues/126">unanswered questions</a>.
+That is when I decided to start from a clean slate in Rust.
+Setting all this from the ground up took a lot of time and effort,
+but I think it is mature enough to be shared as is from now on.
+Beware, however, that the API might evolve a lot (irregularly).
+My hope is that in the near future, we can improve the reach of this project
+by working both on research extensions, and platform availability.</p>
+<p>Example research extensions:</p>
+<ul>
+<li>Using disparity search for depth initialization to be compatible with RGB (no depth) camera.</li>
+<li>Adding a photometric term to the residual to account for automatic exposure variations
+(some work happening in the photometric branch).</li>
+<li>Adding automatic photometric and/or geometric camera calibration.</li>
+<li>Building a sliding window of keyframes optimization as in <a href="https://github.com/JakobEngel/dso">DSO</a> to reduce drift.</li>
+<li>Intregrating loop closure and pose graph optimization for having a robust vSLAM system.</li>
+<li>Fusion with IMU for improved tracking and reducing scale drift.</li>
+<li>Modelization of rolling shutter (in most cameras) into the optimization problem.</li>
+<li>Extension to stereo cameras.</li>
+<li>Extension to omnidirectional cameras.</li>
+</ul>
+<p>Example platform extensions:</p>
+<ul>
+<li>Making a C FFI to be able to run on systems with C drivers (kinect, realsense, ...).</li>
+<li>Porting to the web with WebAssembly
+(some work happening in the interactive vors repository).</li>
+<li>Porting to ARM for running in embedded systems and phones.</li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>
