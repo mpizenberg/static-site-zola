@@ -4,7 +4,7 @@ date = 2018-09-19
 template = "project-item.html"
 
 [extra]
-authors = ["Matthieu Pizenberg", "Nicolas Gaboris", "Matthias Benkort", "Thomas Forgione"]
+authors = ["Matthieu Pizenberg", "Nicolas Gaborit", "Matthias Benkort", "Thomas Forgione"]
 teaser = "Minimalist elm implementation of the game videoball (not affiliated to official game)"
 thumbnail = "elm-videoball.png"
 # header = "header.png"

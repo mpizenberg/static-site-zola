@@ -4,7 +4,7 @@ date = 2015-03-18
 template = "project-item.html"
 
 [extra]
-authors = ["Matthias Benkort", "Nicolas Gaboris", "Arthur Manoha", "Matthieu Pizenberg", "Louis Viot"]
+authors = ["Matthias Benkort", "Nicolas Gaborit", "Arthur Manoha", "Matthieu Pizenberg", "Louis Viot"]
 teaser = "MVG (Multiple View Geometry) Assistant Tool for Reconstruction from Images eXtraction"
 thumbnail = "matrix_128.png"
 header = "matrix_header.png"
