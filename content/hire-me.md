@@ -6,7 +6,7 @@ Companies usually make a list of experience and requirements with job offers.
 Very often unrealistic, but they have the advantage of setting a goal,
 a target for the perfect candidate.
 Let's try to do the same, in reverse!
-**Here are the traits of a company I would wholeheartedly work for.**.
+**Here are the traits of a company I would wholeheartedly work for**.
 
 Turning light into digital images thanks to camera sensors,
 manipulating 3D data and visualizing it in mixed reality,
