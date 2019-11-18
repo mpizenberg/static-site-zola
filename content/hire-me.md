@@ -79,10 +79,9 @@ To sum up:
 - **is open source friendly**
 - **is fine with 1 day of less related open source projects, or partial time positions**
 
-Other bonus points:
+Bonus points:
 
- - make robots
- - babyfoot, ping pong table and or pool table
- - great salary
+ - building robots to play football in your place
+ - Amateur of ping-pong matches at lunch
 
 **You do all that? Then let's make great things together!**
