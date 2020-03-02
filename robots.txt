@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://matthieu.pizenberg.fr/sitemap.xml
