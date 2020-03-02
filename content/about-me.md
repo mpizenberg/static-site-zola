@@ -5,8 +5,8 @@ title = "About me"
 [extra]
 name = "Matthieu Pizenberg"
 pronouns = "he/him"
-title = "Ph.D. Student"
-organizations = ["Enseeiht Toulouse", "A*Star Singapore"]
+title = "Ph.D. in Computer Vision"
+organizations = ["Enseeiht Toulouse"]
 thumbnail = "profile-roma-128x128.jpg"
 
 # Using material design icons: https://materialdesignicons.com
@@ -21,7 +21,7 @@ social = [
 ]
 +++
 
-Hi, my name is **Matthieu** and I’m a **French Ph.D. student** living in Toulouse.
+Hi, my name is **Matthieu** and I’m a **French Ph.D. in Computer Vision** living in Toulouse.
 I’ve always been passionate about science and technology!
 Quite early, I was spending hours on building Lego and Meccano constructions.
 These days I’m more focused on digital content (programming),
