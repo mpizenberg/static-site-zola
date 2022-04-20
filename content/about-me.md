@@ -6,40 +6,32 @@ title = "About me"
 name = "Matthieu Pizenberg"
 pronouns = "he/him"
 title = "Ph.D. in Computer Vision"
-organizations = ["Enseeiht Toulouse"]
+organizations = ["Living in France"]
 thumbnail = "profile-roma-128x128.jpg"
 
 # Using material design icons: https://materialdesignicons.com
 social = [
 	{icon = "email", url = "mailto:matthieu@pizenberg.fr"},
 	{icon = "github-circle", url = "https://github.com/mpizenberg"},
-	{icon = "gitlab", url = "https://gitlab.com/mattpiz"},
+	#	{icon = "gitlab", url = "https://gitlab.com/mattpiz"},
 	{icon = "school", url = "https://scholar.google.com.sg/citations?user=RfM6jfAAAAAJ&hl=en"},
 	{icon = "alpha-r-box", url = "https://www.researchgate.net/profile/Matthieu_Pizenberg"},
 	{icon = "twitter", url = "https://twitter.com/mattpiz"},
-	{icon = "mastodon", url = "https://mamot.fr/@piz"},
+	#	{icon = "mastodon", url = "https://mamot.fr/@piz"},
 ]
 +++
 
-Hi, my name is **Matthieu** and I’m a **French Ph.D. in Computer Vision** living in Toulouse.
-I’ve always been passionate about science and technology!
-Quite early, I was spending hours on building Lego and Meccano constructions.
-These days I’m more focused on digital content (programming),
-but still love getting my hands dirty for some **robotics side project**.
+Hi, my name is **Matthieu** and I’m a **French Ph.D. in Computer Vision** living in France.
+I'm passionate about science and technology, especially when it revolves around programming, robotics and multimedia.
+I also strongly believe in sharing knowledge so I try my best making all my research content easily available online.
 
-In my work, I deal with **computer vision and multimedia**.
-I strongly believe in sharing knowlegde and open source communities
-so I try my best making all my research content easily available online.
+The past few years, I've had a growing interest for the [Rust][rust] and [Elm][elm] programming languages.
+Rust is perfect for correct high performance code, and Elm is delightful for building web apps.
+In addition, both these communities encourage strongly on being kind and sharing knowledge so their values align with mine.
+For these reasons, I'm quite involved in the Elm community.
+I used to co-organize meetups in [Singapore][elm-sg] and [Toulouse][elm-toulouse], and now I'm maintaining the Elm track on the [Exercism learning platform][elm-exercism].
 
-I’ve also had a growing interest for **functional programming**,
-and for the [Elm][elm] programming language in particular.
-This is the friendliest language for newcommers I've ever encountered,
-so thank you Evan for that!
-To give back to the community, I used to co-organize
-the Elm Singapore meetups with the amazing [Mads][elm-sg].
-Now I'm co-organizing the **Elm Toulouse** meetups with my bro [Matthias][elm-toulouse],
-and also co-maintaining the [Exercism Elm][elm-exercism] track.
-
+[rust]: https://www.rust-lang.org/
 [elm]: https://elm-lang.org/
 [elm-sg]: https://www.meetup.com/Elm-Singapore/members/25220742/
 [elm-toulouse]: https://www.meetup.com/Elm-Toulouse/members/190445692/
@@ -50,7 +42,7 @@ playing board games and eating [raclette][raclette]!
 I also enjoy playing football and a new discovery to me, [kin-ball][kinball].
 This is a really original sport because there are three teams competing
 on the field instead of the classic two.
-Give it a try if you are lucky enought to live near a kin-ball club!
+Give it a try if you are lucky enough to live near a kin-ball club!
 
 [raclette]: https://fr.wikipedia.org/wiki/Raclette
 [kinball]: https://en.wikipedia.org/wiki/Kin-Ball
