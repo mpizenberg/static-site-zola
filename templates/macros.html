@@ -44,6 +44,22 @@
 {% endmacro project_item_small_box %}
 
 
+{% macro video_item_small_box(item) %}
+<li class="box">
+	<article class="columns">
+		<figure class="image column is-half-mobile is-3-tablet">
+			<img src="{{ item.permalink }}{{ item.extra.thumbnail }}" alt="">
+		</figure>
+		<div class="column content">
+			<a href="{{ item.permalink }}"><strong>{{ item.title }}</strong></a><br>
+			{{ item.extra.teaser }}<br>
+			{% if item.year %}{{item.year}}<br>{% endif %}
+		</div>
+	</article>
+</li>
+{% endmacro video_item_small_box %}
+
+
 {% macro icon(icon, url) %}
 <span class="icon is-large">
 	<a href="{{ url }}"><i class="mdi mdi-36px mdi-{{ icon }}"></i></a>

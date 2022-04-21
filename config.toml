@@ -21,6 +21,7 @@ highlight_code = true
 
 # Navigation bar menu
 navbar = [
+	{name = "Videos", url = "videos/"},
 	{name = "Posts", url = "posts/"},
 	{name = "Projects", url = "projects/"},
 	{name = "Research", url = "research/"},
