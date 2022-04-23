@@ -10,7 +10,7 @@ So I have been working on a wide range of topics, such as computer vision, boole
 Some domains that have peaked my curiosity but that I haven't had the opportunity to explore yet are rendering and blockchains.
 Also, I believe in Open Source and try to share as much as I'm allowed to, so [my GitHub profile][github] is the most up-to-date place where you'll learn about my skills.
 
-If you throw at me an interesting and challenging problem, I'm thrilling at the idea of searching through research literature on the subject and trying to implement and/or improve a solution solving that problem.
+If you throw at me an interesting and challenging problem, I'm thrilling at the idea of searching through research literature on the subject and trying to implement and/or improve a solution to that problem.
 You want me in your team if you are tackling hard interesting problems and taking the time to solve them correctly.
 However, you do not want me in your team if you need your n+1 project done for yesterday, as I tend to lose interest in non-innovative contexts.
 And please, no Java and no JavaScript, I'm all in Rust and functional programming these days.
