@@ -4,7 +4,7 @@ date = 2021-06-30
 template = "post-item.html"
 
 [extra]
-thumbnail = "noimage.png"
+thumbnail = "derivation.png"
 # header = "header.png"
 +++
 
