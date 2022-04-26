@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - Updates on elm-test, elm-test-rs, exercism</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Updates on elm-test, elm-test-rs, exercism</h1>
+
+<p class="subtitle is-5">
+2022-04-16<br>
+</p>
+
+<div class="content"><p>I have a few exciting news to share related to those things I'm involved in.</p>
+<p>TLDR:</p>
+<ul>
+<li>New version of <a href="https://github.com/rtfeldman/node-test-runner">elm-test</a> on master (not published yet) with compatibility with <a href="https://lamdera.com/">lamdera</a></li>
+<li>New version of <a href="https://github.com/mpizenberg/elm-test-rs/releases/tag/v2.0.1">elm-test-rs</a> that can print a list of all tests run</li>
+<li>The elm track on <a href="https://exercism.org/tracks/elm">exercism</a> now has tests grouped by tasks, and an analyzer activated on all exercises, powered by elm-review</li>
+</ul>
+<span id="continue-reading"></span><h2 id="elm-test-compatibility-with-lamdera">elm-test compatibility with lamdera</h2>
+<p>Lamdera is very interesting platform for full stack elm apps, but since it's core packages are different than the core elm packages, this was causing an issue with how elm-test was resolving test dependencies. There is now a new approach for the dependency solver of elm-test, that is compatible with lamdera! Many thanks to @harrysarson , @lydell and @avh4 for the help!</p>
+<p>But since the whole solver was change, we would love feedback from the community to make sure we didn't break your tests. <strong>If you can, don't hesitate to try out the <a href="https://github.com/rtfeldman/node-test-runner">master branch of elm-test</a></strong>.</p>
+<h2 id="elm-test-rs-v2-0-1-with-a-tests-listing">elm-test-rs v2.0.1 with a tests listing</h2>
+<p>The new version of <a href="https://github.com/mpizenberg/elm-test-rs/releases/tag/v2.0.1">elm-test-rs v2.0.1</a> now prints a list of all tests that were run when using the verbose <code>-v</code> command line argument. Thanks all who participated in <a href="https://discourse.elm-lang.org/t/do-you-want-a-list-of-all-tests-passing-and-failing-in-your-console-test-reports/8249">the survey</a>. And thanks @Augustin82 for the feature idea, discussions and PoC.</p>
+<p><img src="elm-test-rs-listing.png" alt="Listing of the tests run" /></p>
+<h2 id="exercism-elm-track-now-has-an-analyzer">exercism elm track now has an analyzer</h2>
+<p>Exercism is a community-run learning platform where people can learn and mentor. The <a href="https://exercism.org/tracks/elm">elm track</a> now takes advantage of @jfmengels fabulous <a href="https://github.com/jfmengels/elm-review">elm-review</a> to provide automatic feedback to students in addition to the human mentoring they can get.</p>
+<p><img src="exercism-analyzer.png" alt="Analyzer" /></p>
+<p>And the updates on the <code>--report exercism</code> in addition to changes in the elm track repo also enables grouping of tests by tasks!</p>
+<p><img src="exercism-tasks.png" alt="Tests grouped by tasks" /></p>
+<p>Thanks a lot @jiegillet and @ceddlyburge for your work on this!</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

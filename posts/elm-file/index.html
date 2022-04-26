@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - New package alternative&#x2F;complementary to elm&#x2F;file</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">New package alternative&#x2F;complementary to elm&#x2F;file</h1>
+
+<p class="subtitle is-5">
+2021-03-20<br>
+</p>
+
+<div class="content"><p>Package: <a href="https://github.com/mpizenberg/elm-file">GitHub - mpizenberg/elm-file: Alternative to elm/file that can be encoded and passed through ports</a>
+Ellie: <a href="https://ellie-app.com/cGtMSj4QnPWa1">https://ellie-app.com/cGtMSj4QnPWa1</a></p>
+<p>I am in need of processing files with WebAssembly on a recent project but the <code>File</code> type provided by <a href="https://github.com/elm/file"><code>elm/file</code></a> cannot be encoded and sent to JS via a port.</p>
+<span id="continue-reading"></span>
+<p>So I’ve been using an alternative <code>File</code> type defined as</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#b48ead;">type File </span><span>=
+</span><span>    </span><span style="color:#96b5b4;">{</span><span> value : </span><span style="color:#d08770;">Json</span><span>.</span><span style="color:#d08770;">Decode</span><span>.</span><span style="color:#d08770;">Value
+</span><span>    </span><span style="color:#96b5b4;">,</span><span> name : </span><span style="color:#d08770;">String
+</span><span>    </span><span style="color:#96b5b4;">,</span><span> mime : </span><span style="color:#d08770;">String
+</span><span>    </span><span style="color:#96b5b4;">,</span><span> size : </span><span style="color:#d08770;">Int
+</span><span>    </span><span style="color:#96b5b4;">,</span><span> lastModified : </span><span style="color:#d08770;">Time</span><span>.</span><span style="color:#d08770;">Posix
+</span><span>    </span><span style="color:#96b5b4;">}
+</span></code></pre>
+<p>It is quite convenient to pass through a port and can still be transformed into the official <code>File</code> type via its decoder if needed. I’ve also added helper functions to upload files via file input or drag and drop. <a href="https://ellie-app.com/cGtMSj4QnPWa1">Here is an example Ellie</a>.</p>
+<p><a href="https://ellie-app.com/cGtMSj4QnPWa1"><img src="elm-file-example.png" alt="Ellie example usage of elm-file" /></a></p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

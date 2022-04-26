@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - elm-allo: a WebRTC and Elm videoconference example</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">elm-allo: a WebRTC and Elm videoconference example</h1>
+
+<p class="subtitle is-5">
+2020-05-20<br>
+</p>
+
+<div class="content"><p>I’ve recently explored WebRTC, as a mean to making minigames with visual chat, like a Boggle for example. This would be ideal to connect more often with my grand parents in a playful and simple way (just send a link). It turns out WebRTC is not an easy beast to tame! And I’m far from having something truly robust but I believe that experience might benefit others so here it is.</p>
+<span id="continue-reading"></span>
+<p>Let's start with some screenshots ;)</p>
+<p><img src="screenshot1.jpeg" alt="Screenshot 1 of elm-allo" /></p>
+<p><img src="screenshot2.jpeg" alt="Screenshot 2 of elm-allo" /></p>
+<h2 id="brief-overview-of-webrtc">Brief overview of WebRTC</h2>
+<p>WebRTC is a vast set of standards, tools and protocols aiming at making peer-to-peer real-time direct communications in the browser. This includes audio, video and data. There are two steps in order to setup a WebRTC communication between peers.</p>
+<ol>
+<li>Exchange public communication addresses</li>
+<li>Agree on the format of the data to be exchanged</li>
+</ol>
+<p>All of this setup is called “signaling” and is rather independent from the WebRTC standard itself. You could do the signaling with sms, xmpp or carrier pigeon. But usually, signaling is done by the same server that serves the WebRTC-enabled application. In my case, the server is minimalist Node Express app, and the signaling is handled with Web sockets.</p>
+<p>A connection between two peers is pragmatically called <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection"><code>RTCPeerConnection</code></a>. And once it is correctly established, our job is basically done!</p>
+<h2 id="signaling-with-ice">Signaling with ICE</h2>
+<p>Each end of a peer connection holds a system called <a href="https://developer.mozilla.org/en-US/docs/Glossary/ICE">ICE for Interactive Connectivity Establishment</a>, whose job is to find the most efficient route between eachother. And for this, the ICE system of the browser communicates with us through events on the peer connection object. <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/public/WebrtcHighLevelApi.js#L186">Our job</a>, is to <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/public/WebrtcHighLevelApi.js#L123">label that data as “ICE candidate”, and tunnel it</a> through our <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/server.js#L43">signaling server</a> all the way <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/server.js#L70">to the other peer</a>.</p>
+<h2 id="relaying-the-config-with-sdp">Relaying the config with SDP</h2>
+<p>The second type of data relayed by our signaling server is called <a href="https://developer.mozilla.org/en-US/docs/Glossary/SDP">SDP (Session Description Protocol)</a>. But again, just as with ICE, our job is only to label and <a href="https://en.wikipedia.org/wiki/The_Transporter">transport the merchandise</a>, no question asked.</p>
+<h2 id="where-is-the-difficulty-then">Where is the difficulty then?</h2>
+<p>Well it’s not because we only transmit messages that both ends are gonna be happy about it. This is a highly stateful and concurrent process! And that always means bad things are gonna happen. All the “local”, “remote”, “state”, “gathering”, “pending”, “changes”, “statechange”, “disconnected”, “failed”, “error” and others are premises for trouble. In an ideal setting we only have to call <code>setLocalDescription</code> and <code>setRemoteDescriptions</code> for SDP transmitted. In practice there is a need to handle conflicting states and offers. Recently, a pattern has emerged called <a href="https://blog.mozilla.org/webrtc/perfect-negotiation-in-webrtc/">“Perfect Negotiation”</a> to help handle this correctly. I’ve added a small paragraph <a href="https://github.com/mpizenberg/elm-allo#perfect-negociation">in the readme</a> with links to resources.</p>
+<p>This is the pattern implemented in the JS part of elm-allo. I’ve tried to extract a <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/public/WebrtcHighLevelApi.js">high level API</a> in the case of signaling with Web sockets. It exposes to objects, <code>SignalingSocket</code> and <code>PeerConnection</code>, with very few cornerstone exposed methods. With this setup, the actual <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/public/client.js"><code>client.js</code> code</a> is quite straightforward.</p>
+<p>I should note that I may have introduce some issues, or that it is not as “perfect” as it claims since I’m still having some <a href="https://github.com/mpizenberg/elm-allo/issues/1">negociation issues</a>.</p>
+<h2 id="onto-the-ui-part">Onto the UI part!</h2>
+<p>That’s where I thought all the Elm fun would be ^^. Regarding data, this is a very simple application. No routing, <a href="https://github.com/mpizenberg/elm-allo/blob/054243668c2de2c4f747ecf1e68b855e963e9824/src/Main.elm#L78">flat model</a> only holding the ids of the connected peers in a Set, plus some controls for the microphone and camera.</p>
+<p>The handling of the view however is a bit more complex. As you can see in the screen shots below, the layout evolves in 4 steps. First only my camera is displayed, maximized on the screen. When I’m joining the call (green call icon) and waiting for others (or myself ^^) my local view is pushed on the bottom right corner. It is in front of the first remote peer view, as visible in the 3rd step. Finally, if there are more than 3 peers in the room, including me, the layout switches to a grid view, where we are placed last.</p>
+<p><img src="screenshot1.jpeg" alt="Screenshot 1 of elm-allo" /></p>
+<p><img src="screenshot2.jpeg" alt="Screenshot 2 of elm-allo" /></p>
+<p>Those layout changes introduce variations in the DOM hierarchy and that can be quite deadly to the peers streams, attached to the <code>video</code> DOM objects of their associated video. Finding a DOM hierarchy that is friendly with <code>Html.Keyed</code> or its elm-ui version is quite constraining. In particular, the <code>inFront</code> and <code>behindContent</code> elements of elm-ui are not “keyed-friendly” since they introduce an intermediate div element that we have no control of. That is the reason why I ended up <a href="https://github.com/mpizenberg/elm-allo/commit/4c2b50083ada3b6694720ce82a50b36be297c9a3">rewriting all the central area (the video stream) directly with Html, flexboxes and grids</a>.</p>
+<p>I’ve had very useful help from <a href="https://discourse.elm-lang.org/u/dmy">@dmy</a> for some responsiveness issues so thanks for that! Much thanks also to the author of <a href="https://package.elm-lang.org/packages/feathericons/elm-feather/latest/">elm-feather</a> and of <a href="https://ellie-app.com/85HbWTjCGWha1">that toggle switch</a>.</p>
+<h2 id="the-ports-story">The ports story</h2>
+<p>Not much to say except that I’ve just added them on the go. Most buttons trigger some ports and possibly fallible JS code. I’m not checking that they finish correctly, just assuming they would.</p>
+<h2 id="caveats-on-testing-limitations">Caveats on testing limitations</h2>
+<p>I haven’t touched on this yet, but you should know that testing WebRTC is hard, and so I mostly did not create a test suite. First you need SSL to grab the camera and audio. That’s ok for with self-signed certificates. Unfortunately however, apple devices do not seem to agree with this for secure websockets. They need to communicate with actual correct certificates.</p>
+<p>For the most part, recent chromium and firefox are compatible with all the specs. I realized however that event though iOS &gt;= 11 supports WebRTC 1.0, it does not support the updated 1.0 (?) spec that introduced few modifications to improve “perfect negociation”. Such as corner cases of <code>setLocalDescription</code>, <code>setRemoteDescription</code> and <code>restartIce</code>.</p>
+<h2 id="demo-time">Demo time!?</h2>
+<p>Well… I must thank you for having read until here, but that implementation connects everyone who reach the page. So it would not be practical and you might see things that can’t be unseen. So instead I’ve added my very simple <a href="https://github.com/mpizenberg/elm-allo#nginx-reverse-proxy-configuration">Nginx reverse proxy config</a> if you want to set it up on your server and try it! It also seems to work directly on Heroku. So if you want to try it, it is as easy as:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">git</span><span> clone https://github.com/mpizenberg/elm-allo.git
+</span><span style="color:#96b5b4;">cd</span><span> elm-allo
+</span><span style="color:#bf616a;">heroku</span><span> login
+</span><span style="color:#bf616a;">heroku</span><span> create
+</span><span style="color:#bf616a;">git</span><span> push heroku master
+</span></code></pre>
+<p>Implementation of rooms with random addresses is left as an exercise for the reader ;)</p>
+<p>PS: if you happen to know how to fix <a href="https://github.com/mpizenberg/elm-allo/issues/1">that bug</a>, PRs are very welcome. As of this afternoon, I did a test calling my grandparent iPad and it failed miserably, I could see his stream but not he mine...</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

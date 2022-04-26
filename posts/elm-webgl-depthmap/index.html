@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - Using elm and WebGL for depth maps 3D visualizations</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Using elm and WebGL for depth maps 3D visualizations</h1>
+
+<p class="subtitle is-5">
+2020-10-17<br>
+</p>
+
+<div class="content"><ul>
+<li>code: <a href="https://github.com/mpizenberg/elm-webgl-depthmap">https://github.com/mpizenberg/elm-webgl-depthmap</a></li>
+<li>demo: <a href="https://mpizenberg.github.io/elm-webgl-depthmap">https://mpizenberg.github.io/elm-webgl-depthmap</a></li>
+</ul>
+<p>Recently, I’ve been working on visualizations of depth maps in the browser and it turns out <a href="https://package.elm-lang.org/packages/elm-explorations/webgl/latest/">elm-explorations/webgl</a> is great for that! This is a recap of how I used it.</p>
+<span id="continue-reading"></span>
+<p><img src="coin.jpg" alt="Depth map visualization" /></p>
+<h3 id="context">Context</h3>
+<p>I’m currently working on a project doing 3D reconstructions of surfaces with very small surface variations such as textile or coins.
+We want to make what we are building easy to use for the other participants in the project that are neither scientists nor programmers.
+So making a webapp, based on wasm (from Rust) and Elm for the frontent is our current choice.</p>
+<p>The approach we are using for the 3D reconstruction is called <a href="https://en.wikipedia.org/wiki/Photometric_stereo">photometric stereo</a>.
+It is based on images from the same point of view (but with varying lighting conditions).
+For this reason, the resulting 3D reconstruction is a 2D image with depth (from the camera) and normals for every pixel.
+In this research field, they are called depth maps (and normal maps), but they are also sometimes called height maps if the reference isn’t the camera.
+Here is an example of a pair of depth map (monochrome) and normal map (RGB) generated from photometric stereo.</p>
+<img src="depth.png" alt="Depth map" width="45%">
+<img src="normals.png" alt="Normal map" width="45%">
+<h3 id="using-webgl-in-elm-for-the-3d-visualizations">Using WebGL in Elm for the 3D visualizations</h3>
+<p>WebGL works by putting together two programs called a vertex shader, and a fragment shader.
+It sounds fancy but it’s rather simple in fact.
+A 3D model, from the point of view of a GPU is just a set of 3D points (called vertices, or vertex), and instructions to display them.
+The vertex shader takes care of moving vertices, projecting their coordinates from the 3D world frame reference to the coordinates in the canvas of the web page.
+Then the fragment shader fills the canvas for every pixel interpolating colors with the nearest vertices.
+Shaders in WebGL are written in a language called GLSL.
+Here are the shaders for the demo web page.</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#65737e;">// vertex shader (executed for each vertex)
+</span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">main </span><span>() {
+</span><span>    </span><span style="color:#65737e;">// extract RGBA from the texture at the given coordinates
+</span><span>    vec4 tex = </span><span style="color:#bf616a;">texture2D</span><span>(texture, mapCoordinates);
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// extract the normals to pass them to the fragment shader
+</span><span>    vnormal = </span><span style="color:#bf616a;">vec3</span><span>(</span><span style="color:#d08770;">2.0 </span><span>* tex.</span><span style="color:#bf616a;">xyz </span><span>- </span><span style="color:#d08770;">1.0</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// use the camera projection matrix to transform points from world 3D
+</span><span>    </span><span style="color:#65737e;">// coordinates to coordinates in the canvas.
+</span><span>    </span><span style="color:#65737e;">// Note that we extract the &quot;depth&quot; (Z) from the 4th component of the texture (tex.w).
+</span><span>    gl_Position = modelViewProjection * </span><span style="color:#bf616a;">vec4</span><span>(position, -tex.</span><span style="color:#bf616a;">w </span><span>* scale, </span><span style="color:#d08770;">1.0</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#65737e;">// fragment shader (executed for each pixel)
+</span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">main </span><span>() {
+</span><span>    </span><span style="color:#65737e;">// normalizing the interpolated vnormal for the given pixel
+</span><span>    vec3 normal = </span><span style="color:#bf616a;">normalize</span><span>(vnormal);
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// computing the light intensity on that pixel (the color)
+</span><span>    </span><span style="color:#b48ead;">float</span><span> intensity = </span><span style="color:#bf616a;">dot</span><span>(normal, directionalLight);
+</span><span>    gl_FragColor = </span><span style="color:#bf616a;">vec4</span><span>(intensity, intensity, intensity, </span><span style="color:#d08770;">1.0</span><span>);
+</span><span>}
+</span></code></pre>
+<p>You may have spotted that only one texture is used. That’s because we pack together the normals (RGB) and the depth into a single PNG image with an alpha channel for the depth (RGBA).
+If you want to know more about WebGL, have look at the <a href="https://webglfundamentals.org/">WebGL Fundamentals guide</a>.</p>
+<h3 id="how-about-using-a-3d-rendering-engine-instead">How about using a 3D rendering engine instead?</h3>
+<p>If you know 3D and JS, you know <a href="https://threejs.org/">threejs</a>.
+And if you know 3D and elm, you should know <a href="https://github.com/ianmackenzie/elm-3d-scene">elm-3d-scene</a>!
+It’s an amazing project so kudos to Ian who is leading that front.
+It’s still very young though.
+And at the time of doing that experimentation, it hasn’t stabilized yet on a way to use custom shaders, or geometry that is not internally indexed, currently limited to 16bits so a maximum of 65536 vertices per object.
+So unfortunaley we cannot directly use it for our geometry.
+But I hope this experiment will help shaping ways of doing it in the future.
+I am heavily using <a href="https://github.com/ianmackenzie/elm-3d-camera">elm-3d-camera</a> though, which helps a great deal being confident in the matrices being built for the camera viewpoint.
+Combined with <a href="https://github.com/ianmackenzie/elm-geometry">elm-geometry</a>, these enabled building the panning + orbiting + zooming interaction of the viewer.
+You can zoom with the mouse wheel, orbit by clicking and dragging, and pan by also holding the ctrl key while dragging.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - 2D Fourier transform for images</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">2D Fourier transform for images</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg</em><br>
+Easy to use 2D spectral transforms for images, such as Fourier (FFT) and cosine (DCT) transforms<br>
+2021<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;fft2d">Code</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;fft2d">Crate</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;docs.rs&#x2F;fft2d">Docs</a></span>
+</p>
+
+<div class="research-content content"><p>This crate aims to provide easy to use 2D spectral transforms for images, such as Fourier (FFT) and cosine (DCT) transforms.
+By default, only the Fourier transforms are availables.
+The cosine transform is available with the <code>rustdct</code> feature, named after the corresponding optional dependency.</p>
+<p>By default, only implementations on mutable slices <code>&amp;mut [f64]</code> are available, inside the <code>fft2d::slice</code> module of this crate.
+Implementations of the transforms are also available for <a href="https://nalgebra.org">nalgebra</a> matrices in the <code>fft2d::nalgebra</code> module, if the <code>nalgebra</code> feature is activated.</p>
+<p>Here is a partial extract of code for the <code>low_pass</code> filtering example with the input and output images, just to get a sense of the API.</p>
+<p><img src="https://user-images.githubusercontent.com/2905865/146199839-2cfe9f1b-ed4c-4f76-b880-fddd5b11d074.jpg" alt="fft2d_low_pass_mandrill" /></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Compute the 2D fft of the complex image data (beware of the transposition).
+</span><span style="color:#96b5b4;">fft_2d</span><span>(width, height, &amp;</span><span style="color:#b48ead;">mut</span><span> img_buffer);
+</span><span>
+</span><span style="color:#65737e;">// Shift opposite quadrants of the fft (like matlab fftshift).
+</span><span>img_buffer = </span><span style="color:#96b5b4;">fftshift</span><span>(height, width, &amp;img_buffer);
+</span><span>
+</span><span style="color:#65737e;">// Apply a low-pass filter.
+</span><span style="color:#b48ead;">let</span><span> low_pass = </span><span style="color:#96b5b4;">low_pass_filter</span><span>(height, width);
+</span><span style="color:#b48ead;">let</span><span> fft_low_pass: Vec&lt;Complex&lt;</span><span style="color:#b48ead;">f64</span><span>&gt;&gt; =
+</span><span>    low_pass.</span><span style="color:#96b5b4;">iter</span><span>().</span><span style="color:#96b5b4;">zip</span><span>(&amp;img_buffer)
+</span><span>    .</span><span style="color:#96b5b4;">map</span><span>(|(</span><span style="color:#bf616a;">l</span><span>, </span><span style="color:#bf616a;">b</span><span>)| l * b).</span><span style="color:#96b5b4;">collect</span><span>();
+</span><span>
+</span><span style="color:#65737e;">// Invert the FFT back to the spatial domain of the image.
+</span><span>img_buffer = </span><span style="color:#96b5b4;">ifftshift</span><span>(height, width, &amp;fft_low_pass);
+</span><span style="color:#96b5b4;">ifft_2d</span><span>(height, width, &amp;</span><span style="color:#b48ead;">mut</span><span> img_buffer);
+</span><span>
+</span><span style="color:#65737e;">// Normalize the data after FFT and IFFT.
+</span><span style="color:#b48ead;">let</span><span> fft_coef = </span><span style="color:#d08770;">1.0 </span><span>/ (width * height) as </span><span style="color:#b48ead;">f64</span><span>;
+</span><span style="color:#b48ead;">for</span><span> x in img_buffer.</span><span style="color:#96b5b4;">iter_mut</span><span>() { *x *= fft_coef; }
+</span></code></pre>
+<h2 id="examples">Examples</h2>
+<p>There are a few examples showing how to use the API, located in the <code>examples/</code> folder.</p>
+<h3 id="low-pass-filter-via-fourier-transform">Low pass filter via Fourier transform</h3>
+<p>This example shows how to apply a low pass filter on images.
+It is present both for the mutable slice API at <code>examples/low_pass.rs</code> and for the nalgebra API at <code>examples/low_pass_nalgebra.rs</code>.
+Example results are visible in the figure above in the readme.
+You can compile and run the example with the following command:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> run</span><span style="color:#bf616a;"> --release --example</span><span> low_pass
+</span></code></pre>
+<h3 id="image-resizing-via-2d-cosine-transform">Image resizing via 2D cosine transform</h3>
+<p>This example shows how to use a 2D cosine transform to resize an image.
+It consists in performing a DCT, then truncating (or expanding) the image buffer, and performing and inverse DCT.
+You can compile and run the example with the following command:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> run</span><span style="color:#bf616a;"> --release --features</span><span> rustdct</span><span style="color:#bf616a;"> --example</span><span> dct_resize
+</span></code></pre>
+<h3 id="normal-integration-to-generate-a-depth-map-or-a-3d-mesh">Normal integration to generate a depth map (or a 3D mesh)</h3>
+<p>In this example, we start from a normal map, which is an image encoding the (x,y,z) components of a surface normals into the RGB components of an image, and we integrate that normal map to get a depth map containing an estimated depth Z at each pixel.
+One algorithm to integrate those normals consists in writing a Poisson solver (as in <a href="https://en.wikipedia.org/wiki/Poisson%27s_equation">Poisson equation</a>) based on a 2D DCT.
+The relevant code is located in the <code>dct_poisson</code> function of the <code>examples/normal_integration.rs</code> file.
+You can compile and run the example with the following command:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> run</span><span style="color:#bf616a;"> --release --features</span><span> rustdct,nalgebra</span><span style="color:#bf616a;"> --example</span><span> normal_integration
+</span></code></pre>
+<p><img src="https://user-images.githubusercontent.com/2905865/145479695-1a915993-3435-4cbb-a97e-e5b0fcd3ce18.jpg" alt="fft2d_normal_integration" /></p>
+<p>The cat normal map used in this example comes from <a href="http://vision.seas.harvard.edu/qsfs/Data.html">Harvard's photometric stereo dataset</a>.</p>
+<p>The code for the normal integration is a Rust implementation of the method presented in the following paper.
+Big thanks to Yvain Quéau (@yqueau) for the help in setting up this port of <a href="https://github.com/yqueau/normal_integration">his matlab code</a>.</p>
+<blockquote>
+<p>Normal Integration: a Survey - Queau et al., 2017</p>
+</blockquote>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - Experience report on setting up elm test runners in isolated containers</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Experience report on setting up elm test runners in isolated containers</h1>
+
+<p class="subtitle is-5">
+2020-02-02<br>
+</p>
+
+<div class="content"><p>We are currently setting up some elm test runners based on docker containers.
+The test runners are aimed at testing students code on various exercises and we have three constraints, (1) no network access, (2) read-only except specific directories and (3) no compilation cache.
+This is a small report on things making this setup more difficult than it could.</p>
+<span id="continue-reading"></span><h3 id="1-no-network-access">(1) no network access</h3>
+<p>Elm is already capable of running without network access as long as package dependencies already are downloaded in <code>ELM_HOME</code>.
+We have a restricted set of packages used throughout the exercises so that is not an issue.
+One thing we struggled with though was generating that minimal <code>ELM_HOME</code>.
+Exercises are setup as <code>elm.json</code> projects (not elm packages) so they require specific versions of packages.
+We have had issues because we didn’t realize that we only put a newer version of some package in <code>ELM_HOME</code> while an exercise required an older one.
+Error messages for that case are not very clear.</p>
+<p>A possible solution to this would be a script abled to generate an <code>ELM_HOME</code> with all versions available of a restricted set of packages.</p>
+<h3 id="2-read-only">(2) read-only</h3>
+<p>Elm actually requires to write to <code>ELM_HOME/0.19.1/packages/lock</code> so this cannot be in a read-only part of the container.
+I believe this was introduced to prevent issues when multiple processes are trying to compile stuff at the same time, such as your file watcher, the text editor, etc.
+In our case, it requires us to copy the full <code>ELM_HOME</code> into the writable mounted part of the container for each exercise tested.
+Maybe other parts of <code>ELM_HOME</code> also need write access.
+We did not check that since the lock issue was the first one and required this copy.</p>
+<p>We also have to copy the source code folder.
+This could be prevented if we could choose the location of <code>elm-stuff/</code>.</p>
+<h3 id="3-no-exercise-cache">(3) no exercise cache</h3>
+<p>This is more a performance issue.
+While other test runners in ruby, JS, Go are quite snappy, ours is quite slow to answer.
+I think there are issues with different parts of elm and elm-test.
+Elm has wonderful performances for compilation of huge code bases but I’m wondering if things could be improved for small code bases.
+For example, I have a small 40 LoC lone module <code>WordCount</code> depending only on <code>Dict</code>.
+The command <code>time elm make src/WordCount.elm --output=/dev/null</code> takes 1.3 seconds to complete.
+This is quite fast, but compared to <a href="https://discourse.elm-lang.org/t/community-beta-for-elm-0-19-1/4102/19">people compiling 28k LoC in 1.9 seconds</a> it feels like we could do better.</p>
+<p>Weirder, compilation with no network takes much longer.
+<code>time elm make src/WordCount.elm --output=/dev/null</code> clocks at 5 full seconds when I deactivate network connectivity.
+This is a little annoying since our containers are also with no network connectivity.</p>
+<p>On top of <code>elm make</code> we have to add <code>elm-test</code>.
+In our case, for roughly 10 simple unit tests (no fuzz) it adds approximately 1.3 seconds so we arrive at 2.6 seconds with network, and 6.3 without.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

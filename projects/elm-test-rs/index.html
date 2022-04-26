@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - elm-test-rs</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">elm-test-rs</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg</em><br>
+Fast and portable executable to run your Elm tests<br>
+2021<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;elm-test-rs">Code</a></span>
+</p>
+
+<div class="research-content content"><p>Fast and portable executable to run your Elm tests.</p>
+<h2 id="install">Install</h2>
+<p>To install elm-test-rs <strong>globally</strong>, simply download the executable for your system
+from the <a href="https://github.com/mpizenberg/elm-test-rs/releases">latest release</a>,
+and put it in a directory in your <code>PATH</code> environment variable
+so that you can call <code>elm-test-rs</code> from anywhere.</p>
+<p>To install elm-test-rs <strong>locally</strong> per project,
+add elm-test-rs in your <code>elm-tooling.json</code> config file
+and use <a href="https://elm-tooling.github.io/elm-tooling-cli/"><code>elm-tooling install</code></a>.
+In such case, you'll have to run it via npx: <code>npx elm-test-rs</code>.</p>
+<p>To install elm-test-rs <strong>in your CI</strong>,
+as well as elm and other tools, use this <a href="https://github.com/mpizenberg/elm-tooling-action">GitHub action</a>.</p>
+<h2 id="usage">Usage</h2>
+<p>Use <code>elm-test-rs init</code> to setup tests dependencies and create <code>tests/Tests.elm</code>.</p>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>&gt; elm-test-rs init
+</span><span>The file tests/Tests.elm was created
+</span></code></pre>
+<p>And simply use <code>elm-test-rs</code> to compile and run all your tests.</p>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>&gt; elm-test-rs
+</span><span>
+</span><span>Running 1 tests. To reproduce these results later,
+</span><span>run elm-test-rs with --seed 597517184 and --fuzz 100
+</span><span>
+</span><span>◦ TODO: Implement the first test. See https://package.elm-lang.org/packages/elm-explorations/test/latest for how to do this!
+</span><span>
+</span><span>TEST RUN INCOMPLETE because there is 1 TODO remaining
+</span><span>
+</span><span>Duration: 1 ms
+</span><span>Passed:   0
+</span><span>Failed:   0
+</span><span>Todo:     1
+</span></code></pre>
+<p>Information on how to write tests is available at https://github.com/elm-explorations/test/.</p>
+<h2 id="new-features-compared-to-elm-test">New features compared to elm-test</h2>
+<h3 id="capturing-debug-log-outputs">Capturing <code>Debug.log</code> outputs</h3>
+<p>With elm-test-rs, calls to <code>Debug.log</code> are captured
+and displayed in context with the associated failing test.
+Let's say we have the following source file.</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#b48ead;">module </span><span>Question </span><span style="color:#b48ead;">exposing </span><span>(</span><span style="color:#8fa1b3;">answer</span><span>)
+</span><span>
+</span><span style="color:#8fa1b3;">answer </span><span style="color:#b48ead;">: String -&gt; Int
+</span><span style="color:#8fa1b3;">answer </span><span>question =
+</span><span>    </span><span style="color:#b48ead;">let
+</span><span>        _ =
+</span><span>            </span><span style="color:#d08770;">Debug</span><span>.log &quot;</span><span style="color:#a3be8c;">The question was</span><span>&quot; question
+</span><span>    </span><span style="color:#b48ead;">in
+</span><span>    </span><span style="color:#b48ead;">if </span><span>question == &quot;</span><span style="color:#a3be8c;">What is the Answer to the Ultimate Question of Life, The Universe, and Everything?</span><span>&quot; </span><span style="color:#b48ead;">then
+</span><span>        </span><span style="color:#d08770;">43
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>        </span><span style="color:#d08770;">0
+</span></code></pre>
+<p>And we have the following tests file.</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#b48ead;">module </span><span>Tests </span><span style="color:#b48ead;">exposing </span><span>(..)
+</span><span>
+</span><span style="color:#b48ead;">import </span><span>Expect
+</span><span style="color:#b48ead;">import </span><span>Question
+</span><span style="color:#b48ead;">import </span><span>Test </span><span style="color:#b48ead;">exposing </span><span>(</span><span style="color:#b48ead;">Test</span><span>)
+</span><span>
+</span><span style="color:#8fa1b3;">suite </span><span style="color:#b48ead;">: Test
+</span><span style="color:#8fa1b3;">suite </span><span>=
+</span><span>    </span><span style="color:#d08770;">Test</span><span>.describe &quot;</span><span style="color:#a3be8c;">Question</span><span>&quot;
+</span><span>        </span><span style="color:#96b5b4;">[ </span><span style="color:#d08770;">Test</span><span>.test &quot;</span><span style="color:#a3be8c;">answer</span><span>&quot; &lt;|
+</span><span>            \_ -&gt;
+</span><span>                </span><span style="color:#d08770;">Question</span><span>.answer &quot;</span><span style="color:#a3be8c;">What is the Answer to the Ultimate Question of Life, The Universe, and Everything?</span><span>&quot;
+</span><span>                    |&gt; </span><span style="color:#d08770;">Expect</span><span>.equal </span><span style="color:#d08770;">42
+</span><span>        </span><span style="color:#96b5b4;">]
+</span></code></pre>
+<p>Then <code>elm-test-rs</code> will give you the following output.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Running 1 tests. To reproduce these results later,
+</span><span>run elm-test-rs with --seed 2433154680 and --fuzz 100
+</span><span>
+</span><span>↓ Question
+</span><span>✗ answer
+</span><span>
+</span><span>    43
+</span><span>    ╷
+</span><span>    │ Expect.equal
+</span><span>    ╵
+</span><span>    42
+</span><span>
+</span><span>    with debug logs:
+</span><span>
+</span><span>The question was: &quot;What is the Answer to the Ultimate Question of Life, The Universe, and Everything?&quot;
+</span><span>
+</span><span>
+</span><span>TEST RUN FAILED
+</span><span>
+</span><span>Duration: 2 ms
+</span><span>Passed:   0
+</span><span>Failed:   1
+</span></code></pre>
+<p>There are still improvements to be made since fuzz tests will report
+all their logs instead of just the logs for the reduced case,
+but this is already super useful for unit tests.</p>
+<h3 id="deno-runtime">Deno runtime</h3>
+<p>By default, <code>elm-test-rs</code> runs the tests with Node.
+It is possible however to run the tests with <a href="https://deno.land/">Deno</a> instead of Node with <code>elm-test-rs --deno</code>.
+This makes testing more accessible in places where Node is tedious to install.</p>
+<h3 id="verbosity">Verbosity</h3>
+<p>By default, elm-test-rs just prints to stdout the output of the tests runner,
+which is dependent on the <code>--report</code> option chosen (defaults to console report).
+But if you are interested in gaining more insight on what is happening inside,
+you can add a verbosity level to the command.</p>
+<ul>
+<li><code>elm-test-rs -v</code>: Slightly verbose. This will print to stderr some additional info
+like the version of elm-test-rs being used, or the total amount of time
+spent in the Node process spawned to run the tests.
+In addition, the console report will display a listing of all the tests being run.</li>
+<li><code>elm-test-rs -vv</code>: Very verbose. This will print to stderr all the steps
+leading to running the tests.</li>
+<li><code>elm-test-rs -vvv</code>: Debug verbose. This will print some additional info to stderr
+that might be useful to report in an issue if you encounter a crash.</li>
+</ul>
+<h3 id="choose-newest-or-oldest-package-dependencies">Choose newest or oldest package dependencies</h3>
+<p>For packages authors, it is sometimes hard to check that a dependency
+lower bound is actually working with your package when <code>elm-test</code>
+always installs the newest compatible version of a given package to run the tests.
+With <code>elm-test-rs -vv --dependencies newest</code> in &quot;very verbose&quot; mode, it will tell you
+which version of each package was used to run the tests.
+For <code>mdgriffith/elm-ui</code> for example, it will give the following.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">direct</span><span>&quot;: {
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/core</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.5</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/html</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/json</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.1.3</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/virtual-dom</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.2</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm-explorations/test</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.2.2</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">mpizenberg/elm-test-runner</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">4.0.3</span><span>&quot;
+</span><span>  },
+</span><span>  &quot;</span><span style="color:#a3be8c;">indirect</span><span>&quot;: {
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/random</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/time</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;
+</span><span>  }
+</span><span>}
+</span></code></pre>
+<p>While if you run <code>elm-test-rs -vv --dependencies oldest</code>, you will get those.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">direct</span><span>&quot;: {
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/core</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/html</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/json</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/virtual-dom</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm-explorations/test</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.2.2</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">mpizenberg/elm-test-runner</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">4.0.3</span><span>&quot;
+</span><span>  },
+</span><span>  &quot;</span><span style="color:#a3be8c;">indirect</span><span>&quot;: {
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/random</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm/time</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">1.0.0</span><span>&quot;
+</span><span>  }
+</span><span>}
+</span></code></pre>
+<h3 id="offline-mode">Offline mode</h3>
+<p>By default, elm-test-rs will try using the packages already installed
+on your machine, but if there is something missing, it will connect
+to the package website to check existing versions of packages that could be used.
+If you want, you can prevent that second phase from happening, making it crash instead.
+To do that, just add <code>--offline</code> to the elm-test-rs command.</p>
+<p>Note that the <code>--offline</code> and <code>--dependencies</code> flags are incompatible with each other,
+as you generally can't know which are the oldest or newest existing packages
+without asking the package site which version exist.</p>
+<h3 id="other-useful-features">Other useful features</h3>
+<ul>
+<li><code>--workers N</code> lets you specify the amount of worker threads spawn to run the tests.
+Sometimes when your processor reports more threads than cores, like 2 cores and 4 threads,
+you actually get slightly better performance by specifying <code>--workers 2</code> instead
+of its default that will be 4.
+You might also want to limit it to 1 worker for some reasons.</li>
+<li><code>--filter substring</code> lets you run only the tests whose description contain
+the given string passed as argument.
+This can be more convenient than to add <code>Test.only</code> in your tests.
+It also makes it easy to run a group of tests identifiable by their descriptions.</li>
+</ul>
+<p>Check out the command help with <code>elm-test-rs --help</code> to know more about all its features.</p>
+<h2 id="differences-with-elm-test">Differences with elm-test</h2>
+<p>Both elm-test and elm-test-rs are very similar,
+especially since version 0.19.1-revision5 of elm-test.
+However, there are still few differences.
+Some are small differences:</p>
+<ul>
+<li>the <code>console</code> output isn't exactly the same</li>
+<li>the <code>install</code> command isn't implemented yet (use elm-json for that)</li>
+</ul>
+<p>Some might make your tests crash with elm-test-rs:</p>
+<ul>
+<li>there is no automatic module description prepended to tests descriptions</li>
+<li>globs are treated slightly differently</li>
+<li>the <code>json</code> report goes to stdout instead of stderr when erroring</li>
+<li>elm-test-rs does not add <code>elm/random</code> and <code>elm/time</code> to direct dependencies</li>
+</ul>
+<h3 id="no-automatic-module-description">No automatic module description</h3>
+<p>With elm-test, the module name is automatically prepended to descriptions
+of all its tests, meaning you can have the same description for tests
+in different modules.
+With elm-test-rs, there is no such thing, your descriptions are entirely explicit
+and left untouched, so you cannot compile multiple test modules with the same
+description tests inside or you will get a &quot;duplicate test name&quot; error.
+To understand the reasons of this choice,
+please have a look at that <a href="https://github.com/rtfeldman/node-test-runner/issues/493">GitHub issue</a>.</p>
+<p>The easiest way to fix such &quot;duplicate test name&quot; error
+is to create a new <code>Test.describe</code> level for the corresponding modules, tranforming</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#d08770;">TestModule</span><span> exposing </span><span style="color:#b48ead;">(</span><span>a</span><span style="color:#96b5b4;">,</span><span> b</span><span style="color:#96b5b4;">,</span><span> c</span><span style="color:#b48ead;">)
+</span></code></pre>
+<p>into</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#d08770;">TestModule</span><span> exposing </span><span style="color:#b48ead;">(</span><span>tests</span><span style="color:#b48ead;">)
+</span><span>
+</span><span style="color:#8fa1b3;">tests </span><span>= describe &quot;</span><span style="color:#a3be8c;">TestModule</span><span>&quot; </span><span style="color:#96b5b4;">[</span><span> a</span><span style="color:#96b5b4;">,</span><span> b</span><span style="color:#96b5b4;">,</span><span> c </span><span style="color:#96b5b4;">]
+</span></code></pre>
+<h3 id="globs-are-treated-slightly-differently">Globs are treated slightly differently</h3>
+<p>With elm-test, globs support directories so you can call <code>elm-test tests/</code> and all elm files
+within the <code>tests/</code> directory will be used.
+With elm-test-rs the arguments must be elm files,
+so you would call <code>elm-test-rs tests/**/*.elm</code> instead.</p>
+<h3 id="json-report-goes-to-stdout">Json report goes to stdout</h3>
+<p>Since <code>elm-test-rs</code> enables multiple levels of verbosity, that additional logging goes to stderr.
+Therefore, to avoid mixing the report output stream and logs, reports go to stdout.
+This applies to reports of running tests as well as potential error reports of compilation.
+In contrast, <code>elm-test</code> json report outputs to stdout when running tests, but stderr when compilation fails since it forwards the compiler json output, itself in stderr.</p>
+<h3 id="no-elm-time-and-elm-random-dependencies-added-by-default">No <code>elm/time</code> and <code>elm/random</code> dependencies added by default</h3>
+<p>Both <code>elm-test</code> and <code>elm-test-rs</code> add some dependencies when generating and compiling a tests runner.
+In the case of <code>elm-test</code>, those dependencies are <code>elm/json</code>, <code>elm/time</code> and <code>elm/random</code>.
+In the case of <code>elm-test-rs</code>, they are <code>elm/json</code> and <code>mpizenberg/elm-test-runner</code>.
+Concretely, this means that a programmer can use a module from those packages and their tests will compile even if they forget to add those dependencies to their direct tests dependencies.
+This is for example the case of <code>elm-units 2.9.0</code>, which <a href="https://github.com/ianmackenzie/elm-units/blob/2.9.0/tests/Tests.elm#L62">uses the <code>Random</code> module in its tests</a>, but has forgotten to put <code>elm/random</code> in <a href="https://github.com/ianmackenzie/elm-units/blob/2.9.0/elm.json#L45">its dependencies</a>.
+In practice this means that <code>elm-units</code> can compile and run its tests with <code>elm-test</code> but not with <code>elm-test-rs</code>, which will fail at compilation.
+It's an easy fix though, just update your test dependencies in the <code>elm.json</code>.</p>
+<h2 id="minimum-supported-version">Minimum supported version</h2>
+<ul>
+<li>Elm 0.19.1</li>
+<li>Node 10.5</li>
+</ul>
+<h2 id="design-goals">Design goals</h2>
+<p>In addition to new useful features,
+elm-test-rs aims to be easy to maintain and to extend.
+For these reasons, the core design goals are for the code to be</p>
+<ul>
+<li>as simple and lightweight as reasonably possible,</li>
+<li>modular,</li>
+<li>well documented.</li>
+</ul>
+<h2 id="code-architecture">Code architecture</h2>
+<p>The code of this project is split in three parts.</p>
+<ol>
+<li>The CLI, a rust application that generates all the needed JS and Elm files to run tests.</li>
+<li>The supervisor, a small Node JS script
+(roughly 100 lines, no dependency other than Node itself)
+tasked to spawn runners (Elm), start a reporter (Elm)
+and transfer tests results from the runners to the reporter.</li>
+<li>An Elm package <a href="https://github.com/mpizenberg/elm-test-runner">mpizenberg/elm-test-runner</a>
+exposing a main program for a runner and one for a reporter.</li>
+</ol>
+<p>Rust was chosen for the first part since it is a very well fitted language
+for systemish CLI programs and enables consise, fast and robust programs.
+But any other language could replace this since it is completely independent
+from the supervisor, runner and reporter code.
+Communication between the CLI and supervisor is assumed to go through STDIN and STDOUT
+so no need to lose your hair on weird platform-dependent issues
+with inter-process-communication (IPC) going through named pipes.
+The CLI program, if asked to run the tests, performs the following actions.</p>
+<ol>
+<li>Generate the list of test modules and their file paths.</li>
+<li>Generate an <code>elm.json</code> with the correct dependencies for the to-be-generated <code>Runner.elm</code>.</li>
+<li>Find all exposed tests.</li>
+<li>Generate <code>Runner.elm</code> with a main test concatenating all found exposed tests.</li>
+<li>Compile it into a JS file wrapped into a Node worker module.</li>
+<li>Compile <code>Reporter.elm</code> into a Node module.</li>
+<li>Generate and start the Node supervisor program.</li>
+</ol>
+<p>To find all tests, we perform a small trick, depending on kernel code (compiled elm code to JS).
+First we parse all the tests modules to extract all potential <code>Test</code> exposed values.
+Then in the template file <code>Runner.elm</code> we embed code shaped like this (but not exactly).</p>
+<pre data-lang="elm" style="background-color:#2b303b;color:#c0c5ce;" class="language-elm "><code class="language-elm" data-lang="elm"><span style="color:#8fa1b3;">check </span><span style="color:#b48ead;">: </span><span style="color:#bf616a;">a </span><span style="color:#b48ead;">-&gt; Maybe Test
+</span><span style="color:#8fa1b3;">check </span><span>= ...
+</span><span>
+</span><span style="color:#8fa1b3;">main </span><span style="color:#b48ead;">: Program Flags Model Msg
+</span><span style="color:#8fa1b3;">main </span><span>=
+</span><span>    </span><span style="color:#96b5b4;">[ {{</span><span> potential_tests </span><span style="color:#96b5b4;">}} ]
+</span><span>        |&gt; </span><span style="color:#d08770;">List</span><span>.filterMap check
+</span><span>        |&gt; </span><span style="color:#d08770;">Test</span><span>.concat
+</span><span>        |&gt; ...
+</span></code></pre>
+<p>This template file gets compiled into a JavaScript file <code>Runner.elm.js</code>,
+on which we perform the aforementioned kernel patch.
+The patch consists in modifying all variants constructors of the <code>Test</code> type
+to embed a marker, and modifying the <code>check</code> function to look for that marker.</p>
+<p>Once all the JavaScript code has been generated, it is time to start
+the supervisor Node file, which will orchestrate tests runners.
+The supervisor and the runners communicate through child and parent worker messages.
+The reporter is just loaded from its compiled elm code by the supervisor.
+Communication between the Elm and JS parts are done through ports, as usual.</p>
+<p>The Elm package containing the code for runners and reporters
+is <a href="https://github.com/mpizenberg/elm-test-runner">mpizenberg/elm-test-runner</a>.</p>
+<p><img src="https://mpizenberg.github.io/resources/elm-test-rs/elm-test-rs.png" alt="architecture diagram" /></p>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions are very welcome.
+This repository holds a submodule so make sure to clone it recursively.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">git</span><span> clone</span><span style="color:#bf616a;"> --recursive</span><span> ...
+</span></code></pre>
+<p>To build the <code>elm-test-rs</code> binary, <a href="https://www.rust-lang.org/tools/install">install Rust</a> and run the command:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> build</span><span style="color:#bf616a;"> --release
+</span></code></pre>
+<p>The executable will be located at <code>target/release/elm-test-rs</code>.</p>
+<p>This project also uses <a href="https://github.com/rust-lang/rustfmt">rust format</a> and <a href="https://github.com/rust-lang/rust-clippy">clippy</a>
+(with its default options) to enforce good code style.
+To install these tools run</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">rustup</span><span> update
+</span><span style="color:#bf616a;">rustup</span><span> component add clippy rustfmt
+</span></code></pre>
+<p>and then before committing run</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">cargo</span><span> fmt</span><span style="color:#bf616a;"> --all</span><span> -- --check
+</span><span style="color:#bf616a;">cargo</span><span> clippy
+</span></code></pre>
+<p>PS: clippy is a rapidly evolving tool so if there are lint errors on CI
+don't forget to <code>rustup update</code>.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

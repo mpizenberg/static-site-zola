@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - A new GitHub action for your Elm CI</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">A new GitHub action for your Elm CI</h1>
+
+<p class="subtitle is-5">
+2021-02-25<br>
+</p>
+
+<div class="content"><p>Hi all, I’ve just published a GitHub action to let you install elm and other tools supported by <a href="https://elm-tooling.github.io/elm-tooling-cli/">elm-tooling.json</a> in your CI, the most &quot;boring&quot; way possible as would say Brian.</p>
+<span id="continue-reading"></span>
+<p>This is what using it in your CI config looks like:</p>
+<pre data-lang="yml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yml "><code class="language-yml" data-lang="yml"><span>  - </span><span style="color:#bf616a;">name</span><span>: </span><span style="color:#a3be8c;">Install elm, elm-format and cache the ELM_HOME directory
+</span><span>    </span><span style="color:#bf616a;">uses</span><span>: </span><span style="color:#a3be8c;">mpizenberg/elm-tooling-action@v1.0
+</span><span>    </span><span style="color:#bf616a;">with</span><span>:
+</span><span>      </span><span style="color:#bf616a;">cache-key</span><span>: </span><span style="color:#a3be8c;">elm-home-${{ hashFiles(&#39;elm-tooling.json&#39;, &#39;elm.json&#39;) }}
+</span><span>
+</span><span>  - </span><span style="color:#bf616a;">name</span><span>: </span><span style="color:#a3be8c;">Making sure the installation worked
+</span><span>    </span><span style="color:#bf616a;">run</span><span>: </span><span style="color:#a3be8c;">elm --version
+</span></code></pre>
+<p>And your associated <code>elm-tooling.json</code> would look like this:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">tools</span><span>&quot;: {
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">0.19.1</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">elm-format</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">0.8.5</span><span>&quot;
+</span><span>  }
+</span><span>}
+</span></code></pre>
+<p>More info on the <a href="https://github.com/mpizenberg/elm-tooling-action">project page</a>.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

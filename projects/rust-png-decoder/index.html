@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - Rust PNG Decoder</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Rust PNG Decoder</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg</em><br>
+Pure Rust PNG decoder with good performances in WebAssembly<br>
+2019<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;png-decoder">Code</a></span>
+</p>
+
+<div class="research-content content"><p>This project aims at implementing a <strong>pure Rust PNG decoder</strong>,
+in order to facilitate usage of PNG images <strong>in the context of WebAssembly</strong>.
+The code is available online on GitHub at <a href="https://github.com/mpizenberg/png-decoder">mpizenberg/png-decoder</a>.
+There already exists a well-known PNG decoding crate <a href="https://github.com/image-rs/image-png">image-rs/image-png</a>.
+At the time I needed WebAssembly support though,
+it was too slow for real time decoding of images in the browser.
+I have discussed performances issues on <a href="https://github.com/image-rs/image-png/issues/114">GitHub</a>.
+As displayed in the following flame graph,
+it was taking 100 ms to decode two 640x480 PNG images,
+one for the color image, the other for the depth.</p>
+<p><img src="png-perf-profile-annotated.png" alt="" /></p>
+<p>From the fact that OpenCV decodes images much faster,
+and that Rust should have similar performances than C++,
+I decided to give a try at a new PNG decoder.
+This implementation keeps in mind that it should be &quot;wasm-friendly&quot;,
+meaning we limit the number of memory allocations, which is more costly in WebAssembly.</p>
+<p>The <strong>PNG specification</strong> is <a href="http://www.libpng.org/pub/png/spec/1.2/png-1.2-pdg.html">available online</a>.
+Under the hood, the pixel metadata is compressed with
+the <a href="https://tools.ietf.org/html/rfc1951">deflate algorithm</a>, whose spec is also available online.
+PNG is a simple structured format.
+A file contains successive data blocks called <em>chunks</em> of different types.
+The most interesting types are <em>IHDR</em> (header), <em>IDAT</em> (data) and <em>IEND</em> (end of file).
+The body of the image is composed by successive <em>IDAT</em> blocks containing
+transformed lines of the image (called &quot;filtered&quot;) to reduce entropy,
+then compressed with the deflate algorithm.
+I have implemented the parsing with a fast parser combinator library called <a href="https://github.com/Geal/nom">nom</a>.
+The unfiltering is just simple code.
+Fortunately, a very fast deflate decoder (often called &quot;inflate&quot;) already exists in Rust,
+so we reused that crate named <a href="https://github.com/Frommi/miniz_oxide">miniz-oxide</a>.</p>
+<p>After a few round of optimizations,
+the performances of the decoding code are great,
+especially for images with a majority of <code>Sub</code> scanline filters
+(like the &quot;depth&quot;, &quot;eye&quot;, &quot;rgb&quot; and &quot;texture_alpha&quot; images in table below).
+I've written down an approach comparison with the png crate in
+<a href="https://users.rust-lang.org/t/new-rust-png-decoding-library/30952">rust discourse forum</a> in case interested.
+Below is a table summarizing decoding timings for images I used while writing the code.</p>
+<table><thead><tr><th>Image</th><th>this</th><th>png crate</th><th>OpenCV</th><th>this (wasm)</th><th>png (wasm)</th></tr></thead><tbody>
+<tr><td>depth.png</td><td>4.0 ms</td><td>9.1 ms</td><td>4.0 ms</td><td>8.5 ms</td><td>30.7 ms</td></tr>
+<tr><td>eye.png</td><td>0.48 ms</td><td>0.96 ms</td><td>0.72 ms</td><td>1.5 ms</td><td>5.9 ms</td></tr>
+<tr><td>inkscape.png</td><td>7.1 ms</td><td>9.6 ms</td><td>6.6 ms</td><td>13.4 ms</td><td>30.2 ms</td></tr>
+<tr><td>rgb.png</td><td>6.6 ms</td><td>16.0 ms</td><td>6.5 ms</td><td>13.7 ms</td><td>52.1 ms</td></tr>
+<tr><td>screen.png</td><td>6.5 ms</td><td>10.2 ms</td><td>6.6 ms</td><td>11.6 ms</td><td>29.8 ms</td></tr>
+<tr><td>texture_alpha.png</td><td>0.68 ms</td><td>1.94 ms</td><td>0.99 ms</td><td>1.8 ms</td><td>8.0 ms</td></tr>
+<tr><td>transparent.png</td><td>15.2 ms</td><td>17.4 ms</td><td>13.2 ms</td><td>26.1 ms</td><td>55.8 ms</td></tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

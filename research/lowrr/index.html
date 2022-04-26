@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Research - Low-rank registration of images captured under unknown, varying lighting</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Low-rank registration of images captured under unknown, varying lighting</h1>
+
+<p class="subtitle is-5">
+<em>Matthieu Pizenberg, Yvain Quéau, Abderrahim Elmoataz</em><br>
+International Conference on Scale Space and Variational Methods in Computer Vision (SSVM). 2021<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;hal.archives-ouvertes.fr&#x2F;hal-03172399&#x2F;document">Paper</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;mpizenberg.github.io&#x2F;resources&#x2F;lowrr&#x2F;poster-ssvm2021.pdf">Poster</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;mpizenberg&#x2F;lowrr">Code</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;lowrr.pizenberg.fr">Web app</a></span>
+</p>
+
+<div class="research-content content"><h2 id="abstract">Abstract</h2>
+<p>Photometric stereo infers the 3D-shape of a surface from a sequence of images captured under moving lighting and a static camera. However, in real-world scenarios the viewing angle may slightly vary, due to vibrations induced by the camera shutter, or when the camera is hand-held. In this paper, we put forward a low-rank affine registration technique for images captured under unknown, varying lighting. Optimization is carried out using convex relaxation and the alternating direction method of multipliers. The proposed method is shown to significantly improve 3D-reconstruction by photometric stereo on unaligned real-world data, and an open-source implementation is made available.</p>
+<h2 id="readme">Readme</h2>
+<p>Low-rank registration of slightly misaligned images for photometric stereo.
+This repository holds the <code>lowrr</code> library, a <code>lowrr</code> command-line executable,
+and the <a href="https://lowrr.pizenberg.fr"><code>https://lowrr.pizenberg.fr</code></a> demo web application.</p>
+<p><img src="https://mpizenberg.github.io/resources/lowrr/lowrr-animated.gif" alt="Example alignment of photometric stereo images" /></p>
+<p>In the animation above, we show a close-up view of the same image region
+in 6 successive photos of a surface under varying lighting.
+On the left, the original images are slightly misaligned.
+On the right, the registered images by lowrr are perfectly aligned.</p>
+<p>The algorithm presented here takes advantage of the fact that well aligned sets of images
+should form a matrix with low rank.
+We thus minimize the nuclear norm of that matrix (sum of singular values),
+which is the convex relaxation of its rank.</p>
+<p>This algorithm gives convincing results in the context of photometric stereo images,
+which is where we have evaluated it,
+but it should also work reliably in other situations where minimizing the rank makes sense.
+Some additional experiments show interesting results with multimodal images for example.</p>
+<p><img src="https://mpizenberg.github.io/resources/lowrr/handheld.jpg" alt="Alignment of photometric stereo images improves the 3D reconstruction" /></p>
+<p>The previous figure showcases the improvement on both the 3D reconstruction,
+and the recovered albedo after an alignment of handheld photometric stereo images
+of the Bayeux Tapestry.</p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>This work was supported by the RIN project &quot;Guide Muséal&quot;,
+and by the ANR grant &quot;Inclusive Museum Guide&quot; (ANR-20-CE38-0007).
+The authors would like to thank C. Berthelot at the Bayeux Tapestry Museum
+for supervising the image acquisition campaign of the Bayeux Tapestry.</p>
+<h2 id="installation">Installation</h2>
+<p>To install the <code>lowrr</code> command-line program,
+simply download the archive for your platform (Windows, MacOS, Linux)
+from the <a href="https://github.com/mpizenberg/lowrr/releases">latest release</a>.
+Then extract it and put the executable in a directory listed in your <code>PATH</code> environment variable.
+This way, you will be able to call <code>lowrr</code> from anywhere.</p>
+<h2 id="usage">Usage</h2>
+<p>The simplest way to use <code>lowrr</code> is to call it with a glob pattern
+for the images you want to align, for example:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">lowrr</span><span> img/*.png
+</span></code></pre>
+<p>By default, this will compute the registration and output to stdout
+the affine parameters of each image transformation as specified
+in our research paper.</p>
+<p>If you also want to apply the transformation and save the registered images,
+you can add the <code>--save-imgs</code> command line argument.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#65737e;"># Apply the transformation and save the registered images
+</span><span style="color:#bf616a;">lowrr --save-imgs</span><span> img/*.png
+</span></code></pre>
+<p>Usually, the algorithm can estimate the aligning transformation without working
+on the whole image, but just a cropped area of the image to make things faster.
+You can specify that working frame with the command line arguments
+<code>--crop &lt;left&gt; &lt;top&gt; &lt;right&gt; &lt;bottom&gt;</code> where the border coordinates of that frame
+are specified after the <code>--crop</code> argument (top-left corner is 0,0).
+In that case, I'd suggest to also add the <code>--save-crop</code> argument
+to be able to visualize the cropped area and its registration.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#65737e;"># Work on a reduced 500x300 cropped area and visualize its registration
+</span><span style="color:#bf616a;">lowrr --crop</span><span> 0 0 500 300</span><span style="color:#bf616a;"> --save-crop</span><span> img/*.png
+</span></code></pre>
+<p>You can also customize all the algorithm parameters.
+For more info, have a look at the program help.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#65737e;"># Display the program help for more info
+</span><span style="color:#bf616a;">lowrr --help
+</span></code></pre>
+<h2 id="step-by-step-example-usage">Step by step example usage</h2>
+<ol>
+<li>Install <code>lowrr</code> as described in the <code>Installation</code> section above.
+Make sure it is available to the command line by running <code>lowrr --help</code>,
+which should display the help menu of the program.</li>
+<li>Download and extract this <a href="https://unicloud.unicaen.fr/index.php/s/tBjo2YtwXHBqe7j/download">example set of 6 photos</a>
+of the cover of a comic book about the city of Caen.</li>
+<li>Open a terminal in the directory containing those images and run</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">lowrr --crop</span><span> 2300 2300 2800 2800</span><span style="color:#bf616a;"> --save-crop --save-imgs -v </span><span>*.jpg &gt; params.txt
+</span></code></pre>
+<p>This command will load the 6 images into memory
+and extract a working area corresponding to the 500x500 frame
+located between left, top, right, bottom coordinates of
+2300, 2300, 2800 and 2800 respectively.
+It will then perform the registration algorithm on that working area
+with default parameters and save the registered images for that frame.
+Finally it will project the computed registration parameters from the cropped area
+to the frame of the whole image and output those into the file <code>params.txt</code>.
+Each line of <code>params.txt</code> contains the affine parameters <code>p1, p2, p3, p4, p5, p6</code>
+of the corresponding image, such that they form the following affine matrix:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>| 1 + p1,     p3, p5 |
+</span><span>|     p2, 1 + p4, p6 |
+</span><span>|      0,      0,  1 |
+</span></code></pre>
+<p>In addition this also apply the computed registration to all images and save them on disk.
+All saved images will be located in the <code>out/</code> directory.</p>
+<h2 id="lib-documentation">Lib documentation</h2>
+<p>In addition to the <code>lowrr</code> executable compiled from <code>lowrr-bin/src/main.rs</code>,
+we also provide the code in the form of a library,
+so that it can easily be re-used for other Rust applications.
+The API documentation of the library is available at (stale, todo: change location)
+https://matthieu.pizenberg.pages.unicaen.fr/low-rank-registration</p>
+<h2 id="unfamiliar-with-rust">Unfamiliar with Rust?</h2>
+<p>If you want to read the source code but are not very familiar
+with the Rust language, here are few syntax explanations.</p>
+<p>Basically, if you know how to read C/C++ code, the structure of Rust
+code should be pretty familiar.
+For example, it uses curly braces to delimit code blocks
+and the parts between brackets <code>&lt;T&gt;</code> are type parameters,
+like templates in C++.</p>
+<p>Here are code examples of some patterns and syntax that may be new though.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#65737e;">// Pattern 1: closures
+</span><span style="color:#b48ead;">let </span><span style="color:#8fa1b3;">square </span><span>= |</span><span style="color:#bf616a;">x</span><span>| x * x;
+</span><span style="color:#96b5b4;">square</span><span>(</span><span style="color:#d08770;">3</span><span>) </span><span style="color:#65737e;">// -&gt; 9
+</span><span>
+</span><span style="color:#65737e;">// Pattern 2: iterators
+</span><span>xCollection.</span><span style="color:#96b5b4;">iter</span><span>().</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">x</span><span>| </span><span style="color:#96b5b4;">f</span><span>(x)).</span><span style="color:#96b5b4;">collect</span><span>();
+</span><span>
+</span><span style="color:#65737e;">// Pattern 3: zipping iterators
+</span><span>xCollection.</span><span style="color:#96b5b4;">iter</span><span>()
+</span><span>    .</span><span style="color:#96b5b4;">zip</span><span>(yCollection.</span><span style="color:#96b5b4;">iter</span><span>())
+</span><span>    .</span><span style="color:#96b5b4;">map</span><span>(|(</span><span style="color:#bf616a;">x</span><span>,</span><span style="color:#bf616a;">y</span><span>)| </span><span style="color:#96b5b4;">f</span><span>(x,y)).</span><span style="color:#96b5b4;">collect</span><span>();
+</span><span>
+</span><span style="color:#65737e;">// Pattern 4: for loops on iterators
+</span><span style="color:#b48ead;">for</span><span> x in xCollection.</span><span style="color:#96b5b4;">iter</span><span>() {
+</span><span>    </span><span style="color:#96b5b4;">do_something_with</span><span>(x)
+</span><span>}
+</span><span>
+</span><span style="color:#65737e;">// Pattern 5: crashing on potential errors
+</span><span>result.</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span><span style="color:#65737e;">// or
+</span><span>result.</span><span style="color:#96b5b4;">expect</span><span>(&quot;</span><span style="color:#a3be8c;">crash with an error message</span><span>&quot;);
+</span></code></pre>
+<p>The first pattern is the usage of &quot;closures&quot;,
+a.k.a. &quot;anonymous functions&quot;, a.k.a. &quot;lambda functions&quot;.
+The part between the bars <code>|x|</code> are the arguments.
+The part after the bars <code>x * x</code> is the returned value.
+Closures are useful to use instead of defining properly
+named functions in some parts of the program.</p>
+<p>The second pattern (<code>.iter().map(...)</code>) is basically saying that
+we are iterating over a collection of things and we apply
+the same function <code>f</code> to all those elements of the collection.
+The <code>collect()</code> at the end is more or less saying that we are done
+modifying it in this iterator, and we can regenerate a new
+data structure that will contain the result of those modifications.</p>
+<p>The third pattern consists in using <code>iterator1.zip(iterator2)</code>.
+It is just to bring together two iterators and apply a function
+to both elements at the same time.</p>
+<p>Pattern 4 is another way of iterating, similar to pattern 1.
+Depending on the situation, using loops or mapping a function will be more appropiate.</p>
+<p>Finally, the usage of <code>unwrap()</code> or <code>expect(...)</code> is just to say
+to the compiler that I know it is safe to extract a potentially failing value
+even though it may result in an error.
+In the case of an error, this will crash the program,
+and print the message inside the <code>expect(...)</code>.</p>
+<h2 id="code-contribution">Code contribution</h2>
+<p>To compile the source code yourself, you just need to install <a href="https://www.rust-lang.org/tools/install">Rust</a>,
+and then run the command <code>cargo build --release</code> at the root of this project.
+Cargo is Rust build tool, it will automatically download dependencies
+and compile all the code.
+The resulting binaries will be located in <code>target/release/</code>.
+The first compilation may take a little while, but then will be pretty fast.</p>
+<p>To build the Web application, follow instructions in <code>lowrr-wasm/README.md</code> and then in <code>web-elm/README.md</code>.</p>
+<h2 id="reproducing-the-paper-figures">Reproducing the paper figures</h2>
+<blockquote>
+<p>Warning: this has not been tested on Windows and Mac, only Linux.</p>
+</blockquote>
+<p>Some figures need to run a photometric stereo reconstruction
+and are not reproducible directly with the code in this repository
+since that is out of scope here.
+All the figures that do not involve 3D reconstruction though
+are reproducible with the code provided here.
+You will need to be able to run Matlab code, I leave that to you.</p>
+<p>First, you need to build the <code>lowrr</code> and <code>warp-crop</code> executables.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> build</span><span style="color:#bf616a;"> --release
+</span></code></pre>
+<p>These two executables will be located at <code>target/release/lowrr</code>
+and <code>target/release/warp_crop</code> respectively.
+Copy them somewhere in your path to have them available
+when we run the Matlab scripts.</p>
+<p>Now you need to <a href="https://drive.google.com/uc?id=1EgC3x8daOWL4uQmc6c4nXVe4mdAMJVfg&amp;export=download">download the DiLiGent dataset</a> and extract it.
+We are interested in the <code>pmsData/</code> directory containing
+photometric stereo images of 10 objects.</p>
+<p>The <code>eval/</code> directory in this repository contains two scripts
+<code>eval_registration.m</code> and <code>eval_all_displacement_errors.m</code>,
+as well as some helper functions for each of those scripts.
+Once the DiLiGent data has been downloaded and extracted,
+Change the path of <code>diligent_dir</code> in <code>eval_registration.m</code>,
+eventually also lower the <code>nb_random</code> constant to something small,
+and run the <code>eval_registration</code> Matlab script.</p>
+<p>Once the registration is done for each algorithm on all sequences,
+change <code>nb_random</code> in <code>eval_all_displacement_errors.m</code> to match
+what you set in the first script and run the <code>eval_all_displacement_errors</code> matlab script.
+This will generate visualizations presented in the paper and some others.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

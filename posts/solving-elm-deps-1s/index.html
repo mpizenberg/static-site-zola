@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - Solving dependencies of 11079 elm packages in less than 1s</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Solving dependencies of 11079 elm packages in less than 1s</h1>
+
+<p class="subtitle is-5">
+2020-11-19<br>
+</p>
+
+<div class="content"><p>Dependency solvers are algorithms taking as input the direct dependencies of an app or a package and computing all versions of all packages that will be necessary for the code to run (including indirect dependencies).</p>
+<span id="continue-reading"></span>
+<p>For quite some time now I’ve been working on implementations of a state of the art dependency solver called PubGrub, originally <a href="https://medium.com/@nex3/pubgrub-2fb6470504f">created by Natalie Weizenbaum</a> for the Dart programming language.
+I used elm to prototype my first implementation of PubGrub, which resulted in <a href="https://github.com/mpizenberg/elm-pubgrub">elm-pubgrub</a>, that I <a href="https://discourse.elm-lang.org/t/elm-pubgrub-a-state-of-the-art-dependency-solver-in-elm/6077">presented 4 months ago</a>.
+Beware that there is actually a bug in that implementation that I’ve not fixed yet (sorry).</p>
+<p>But I have more plans for it, and to that end, I’ve reimplemented <a href="https://github.com/pubgrub-rs/pubgrub">PubGrub in Rust</a> this time!
+With the help of Jacob and Alex, we have improved everything from my initial draft and are working on making it a better alternative to the solver embedded in Cargo, Rust package manager.</p>
+<p>Few days ago, I created an index, a registry of all 11079 published elm package versions (to date) between elm 0.14.0 and elm 0.19.1 with their direct dependencies, <a href="https://github.com/pubgrub-rs/pubgrub/files/5541663/elm-packages.zip">all in one file</a>.
+And today, I’m proud to say that we can solve dependencies of all those 11079 package versions with pubgrub in less than 1 second! (0.842s with an i7-10750H)
+I’m now very confident that it will be a central piece for another project of mine, with hopefully more exciting news before Christmas!</p>
+<p>Doing that analysis of elm packages also brought a lot of insight and some surprises.
+I’ll start with some statistics, followed by surprises (invalid packages in the elm registry).</p>
+<h2 id="statistics-on-elm-packages">Statistics on elm packages</h2>
+<p>It’s always fun to explore data and to share some insight on that data.
+So for this, I’ve generated <a href="https://mpizenberg.github.io/resources/pubgrub-rs/elm/pkg_stats.csv">CSV file</a> containing the following fields per package version: id, author, package, version, elm-version, license, direct_dep_count, total_dep_count.
+Once you plug that data into a tool like <a href="https://vega.github.io/voyager/">vega data voyager</a>, you can start exploring it and look for interesting patterns.</p>
+<p><img src="data-voyager.png" alt="Vega data voyager" /></p>
+<p>Here are some interesting plots, we can start with the number of package versions published per version of elm.</p>
+<img src="elm-version.png" alt="Number of package versions per version of elm" width="45%">
+<p>Now the most prolific authors, sorted by number of package versions published.</p>
+<p><img src="authors.png" alt="Number of package versions per author" /></p>
+<p>Here are the different licenses used in elm packages.</p>
+<img src="license.png" alt="Number of package versions per license type" width="45%">
+<p>It is also interesting to note that most packages have a low count of direct and indirect dependencies.</p>
+<img src="direct-deps.png" alt="Direct dependencies per package" width="45%">
+<img src="total-deps.png" alt="Direct and indirect dependencies per package" width="45%">
+<h2 id="bad-surprises">Bad surprises</h2>
+<p>While solving dependencies for all elm packages, I was surprised to see that some packages could not be solved.
+So I did an analysis of all those packages and sorted the failures in different categories as follows.</p>
+<h4 id="packages-depending-on-non-existing-packages">Packages depending on non-existing packages</h4>
+<p>Some packages mentioned in dependencies do not exist in the elm registry. I suppose they may have existed at some point and were removed for some reason. As a consequence, there are a number of existing packages in the registry depending on them which can thus not be compiled anymore. Many of them depended on <code>maxsnew/io</code>, not existing anymore. Those are all elm 0.15 packages:</p>
+<ul>
+<li><code>sporto/erl</code> from 1.0.0 to 3.1.0</li>
+<li><code>jessitron/elm-param-parsin</code> 1.0.0</li>
+<li><code>nphollon/collisions</code> 1.0.0 and 1.0.1</li>
+<li><code>avh4/elm-spec</code> 1.0.0</li>
+<li><code>avh4/elm-diff</code> until 1.0.5</li>
+<li><code>chendrix/elm-matrix</code> from 2.0.1 to 3.0.0</li>
+<li><code>aluuu/elm-check-io</code></li>
+<li><code>truqu/elm-base64</code> 1.0.0</li>
+</ul>
+<p>Some depended on <code>Dandandan/easing</code>, these are elm 0.15 and elm 0.16 packages</p>
+<ul>
+<li><code>KtorZ/elm-notification</code> (elm 0.16)</li>
+<li><code>etaque/elm-transit-style</code> 1.0.0 and 1.0.1 (elm 0.16)</li>
+<li><code>etaque/elm-transit</code> 4.0.1 (elm 0.16)</li>
+<li><code>mgold/elm-animation</code> 1.0.0 and 1.0.1 (elm 0.15)</li>
+</ul>
+<p>Also all packages from <code>spisemisu</code> do not appear to exist anymore in the packages registry. As a consequence, dependencies of the following elm 0.18 packages cannot be solved.</p>
+<ul>
+<li><code>nathanjohnson320/ecurve</code> depends on <code>spisemisu/elm-bytes</code></li>
+<li><code>ktonon/elm-hmac</code> depends on <code>spisemisu/elm-bytes</code></li>
+<li><code>arowM/elm-embedded-gist</code> 1.0.4 depends on <code>spisemisu/elm-sha</code></li>
+<li><code>billstclair/elm-crypto-string</code> until 2.1.0 depend on <code>spisemisu/elm-utf8</code></li>
+</ul>
+<p>Many other packages (mostly elm 0.18) depend on non-existing ones:</p>
+<ul>
+<li><code>imeckler/iterator</code> until 1.1.1 (elm 0.14) depends on <code>uehaj/intrange</code> which does not exist.</li>
+<li><code>sindikat/elm-matrix</code> 1.1.0 and 1.2.0 (elm 0.15) depend on <code>sindikat/elm-array-experimental</code> which does not exist.</li>
+<li><code>rgrempel/elm-route-url</code> until 1.0.4 (elm 0.15) depends on <code>TheSeamau5/elm-history</code> which does not exist.</li>
+<li><code>krisajenkins/elm-exts</code> from 10.0.0 to 10.2.5 (elm 0.15) depends on <code>jterbraak/dateop</code> which does not exist.</li>
+<li><code>javcasas/elm-decimal</code> 1.0.0 (elm 0.16) depends on <code>javcasas/elm-integer</code> <code>&lt; 2.0.0</code> which does not exist.</li>
+<li><code>Warry/elmi-decoder</code> depends on <code>Warry/ascii-table</code> which does not exist (<code>warry/ascii-table</code> exists though)</li>
+<li><code>cmditch/mel-bew3</code> depends on <code>Warry/ascii-table</code> which does not exist.</li>
+<li><code>cmditch/elm-ethereum</code> 1.0.0 and 1.0.1 depend on <code>Warry/ascii-table</code> which does not exist.</li>
+<li><code>ktonon/elm-serverless-cors</code> 1.0.0 and 1.0.1 indirectly depend on <code>ktonon/url-parser</code> which does not exist</li>
+<li><code>ktonon/elm-serverless</code> 3.0.0 to 3.0.2 depend on <code>ktonon/url-parser</code> which does not exist.</li>
+<li><code>danielnarey/elm-form-capture</code> depends on <code>danielnarey/elm-html-tree</code> which does not exist</li>
+<li><code>surprisetalk/elm-bulma</code> from 3.0.0 to 6.0.2 depend on <code>danielnarey/elm-bulma-classes</code> which does not exist</li>
+<li><code>Chadtech/ctpaint-keys</code> from 5.0.0 to 6.0.9 depend on <code>Chadtech/keyboard-extra-browser</code> which does not exist</li>
+<li><code>jfmengels/elm-lint</code> 1.0.0 depends on <code>jfmengels/elm-ast</code> which does not exist.</li>
+<li><code>the-sett/ai-search</code> 3.1.1 depends on <code>tsfoster/elm-heap</code> which does not exist (<code>TSFoster/elm-heap</code> exists though).</li>
+<li><code>the-sett/svg-text-fonts</code> 1.0.0 and 2.0.0 depend on <code>the-sett/elm-multi-dict</code> which does not exist.</li>
+<li><code>allo-media/koivu</code> from 4.0.0 to 4.1.1 depend <code>allo-media/canopy</code> <code>3.1.0 &lt;= v &lt; 4.0.0</code> which does not exist (only 1.0.0 exist).</li>
+</ul>
+<h4 id="packages-depending-on-two-incompatible-versions-of-elm">Packages depending on two incompatible versions of elm</h4>
+<p>Some packages depend indirectly on an older version of elm, due to a dependency to an old version of <code>elm-lang/core</code>. I suspect those are errors happening at the transition between two elm versions.</p>
+<ul>
+<li><code>bakkemo/elm-collision</code> 1.0.0 is an elm 0.15 package depending on <code>elm-lang/core</code> <code>1.0.0 &lt;= v &lt; 2.0.0</code> which is an elm 0.14 package.</li>
+<li><code>eeue56/elm-flat-matrix</code> from 2.0.2 to 2.0.4 are elm 0.16 packages depending on <code>elm-lang/core</code> 2.1.0 which is an elm 0.15 package.</li>
+<li><code>jvoigtlaender/elm-warshall</code> 1.0.0 depends on <code>eeue56/elm-flat-matrix</code> 2.0.4 which itself is not solvable.</li>
+<li><code>mbr/elm-mouse-events</code> 1.0.3 is an elm 0.18 package depending on <code>elm-lang/core</code> 4.0.5 (elm 0.17)</li>
+</ul>
+<p>And some packages are <strong>back from the future</strong>! They indirectly depend on a future version of elm. Impossible you might say! The relativity is broken! Well, not exactly. Some are elm transitions issues I guess, but one is due to packages not existing anymore. This is the one I prefer !</p>
+<ul>
+<li><code>EngageSoftware/elm-dnn-http</code> 1.0.0 is an elm 0.18 package depending on <code>EngageSoftware/elm-dnn-localization</code> which is an elm 0.19 package. (ps <code>elm-dnn-localization</code> starts at version 1.0.2 so maybe previous versions were elm 0.18 packages, but they don’t exist anymore in the package registry)</li>
+<li><code>garetht/elm-dynamic-style</code> 1.0.1 is an elm 0.15 package depending on <code>elm-lang/core</code> 3.0.0 (elm 0.16)</li>
+<li><code>sgraf812/elm-intdict</code> 1.4.0 and 1.4.1 are elm 0.15 packages depending on <code>elm-lang/core</code> 3.0.0 which is an elm 0.16 package.</li>
+<li><code>w0rm/elm-slice-show</code> 3.0.0 is an elm 0.16 package depending on <code>elm-lang/navigation</code> 1.0.0 which is an elm 0.17 package.</li>
+<li><code>vito/elm-ansi</code> 8.0.0 is an elm 0.16 package depending on <code>elm-lang/html</code> <code>1.0.0 &lt;= v &lt; 2.0.0</code> which is an elm 0.17 package.</li>
+<li><code>lattenwald/elm-base64</code> 1.0.2 and 1.0.3 are elm 0.17 packages depending on <code>elm-lang/core</code> <code>5.0.0 &lt;= v &lt; 6.0.0</code> which is for elm 0.18.</li>
+<li><code>nedSaf/elm-bootstrap-grip</code> 1.0.1 and 1.0.2 are elm 0.17 packages depending on <code>elm-lang/core</code> 5.1.1 (elm 0.18)</li>
+</ul>
+<h4 id="indirect-dependencies-on-two-incompatible-versions-of-the-same-package">Indirect dependencies on two incompatible versions of the same package</h4>
+<p>Very similar than with elm itself, but this time regarding regular published packages. Some packages depend on other packages in a way that both depend on two incompatible ranges of versions of a same third packages.</p>
+<ul>
+<li><code>fresheyeball/elm-check-runner</code> 1.0.0 depends on <code>NoRedInk/elm-check</code> <code>2.0.0 &lt;= v &lt; 3.0.0</code> but both depend on incompatible versions of <code>elm-lang/core</code>.</li>
+<li><code>heyLu/elm-format-date</code> 1.0.0 depends on <code>deadfoxygrandpa/elm-test</code> <code>1.0.2 &lt;= v &lt; 2.0.0</code> but both depend on incompatible versions of <code>elm-lang/core</code>.</li>
+<li><code>nphollon/collision</code> 1.0.0 depends on <code>elm-community/elm-list-extra</code> 2.0.0 and both have incompatible dependencies on <code>elm-lang/core</code>.</li>
+<li><code>enetsee/facet-plot-alpha</code> from 2.0.1 to 2.0.3 depends on <code>enetsee/facet-scenegraph-alpha</code> and both have incompatible dependencies on <code>folkertdev/svg-path-lowlevel</code>.</li>
+<li><code>enetsee/facet-render-svg-alpha</code> until 1.0.3 depends on <code>folkertdev/one-true-path-experiment</code> 3.0.2 and both depend on incompatible versions of <code>folkertdev/svg-path-lowlevel</code>.</li>
+<li><code>lucamug/elm-style-framework</code> 5.0.1 depends on <code>lucamug/elm-styleguide-generator</code> <code>3.0.0 &lt;= v &lt; 4.0.0</code> but both depend on incompatible versions of <code>mdgriffith/stylish-elephants</code>.</li>
+<li><code>jonathanfishbein1/elm-comment</code> 5.0.3 depends on <code>lucamug/elm-style-framework</code> 6.0.0 and both have incompatible dependencies to <code>mdgriffith/stylish-elephants</code>.</li>
+<li><code>primait/elm-form</code> 11.0.0 and 12.0.0 depend on <code>Leonti/elm-material-datepicker</code> and both depend on incompatible versions of <code>rluiten/elm-date-extra</code>.</li>
+<li><code>Natim/elm-workalendar</code> 1.0.0 and 1.0.1 are depending on <code>akheron/elm-easter</code> and both have incompatible dependencies to <code>justinmimbs/elm-date-extra</code>.</li>
+<li><code>drathier/elm-graph-test</code> until 1.0.2 depends on <code>elm-community/elm-test</code> 3.1.0 but both depend on incompatible versions of <code>mgold/elm-random-pcg</code> so it is an impossible transitive dependency.</li>
+<li><code>circuithub/elm-bootstrap-html</code> 4.0.1 and 4.0.2 indirectly depend on two incompatible versions of <code>evancz/elm-html</code></li>
+</ul>
+<h4 id="indirect-dependency-on-an-older-version-of-itself">Indirect dependency on an older version of itself</h4>
+<p>I’m not sure how this one was not caught by the compiler.</p>
+<ul>
+<li><code>jonathanfishbein1/complex-numbers</code> 5.0.0 depends on <code>jonathanfishbein1/elm-field</code> <code>3.0.0 &lt;= v &lt; 4.0.0</code> which depends on <code>jonathanfishbein1/complex-numbers</code> <code>4.1.0 &lt;= v &lt; 5.0.0</code> so there is an impossible cycle.</li>
+</ul>
+<h4 id="packages-with-mistakes-in-dependencies">Packages with mistakes in dependencies</h4>
+<p>Those are package author mistakes and should have been caught at package publication.</p>
+<ul>
+<li><code>eskimoblood/elm-wallpaper</code> 2.1.4 depends on elm version <code>&quot;0.17.0 &lt;= v &lt; 0.17.0&quot;</code>.</li>
+<li><code>krisajenkins/elm-dialog</code> until 1.0.2 depends on <code>laszlopandy/elm-console</code> <code>1.1.1 &lt;= v &lt; 1.1.1</code>.</li>
+<li><code>showel/elm-data-util</code> 1.0.0 has a duplicate <code>&quot;elm-version&quot;</code> field, one with the package syntax <code>&quot;0.19.0 &lt;= v &lt; 0.20.0&quot;</code> and one with the application syntax <code>&quot;0.19.0&quot;</code>. This made the deserializer of PubGrub solver fail.</li>
+<li><code>alex-tan/loadable</code> 1.0.0 has a duplicate <code>&quot;elm-version&quot;</code> field, one with the package syntax <code>&quot;0.19.0 &lt;= v &lt; 0.20.0&quot;</code> and one with the application syntax <code>&quot;0.19.0&quot;</code>. This made the deserializer of PubGrub solver fail.</li>
+</ul>
+<h2 id="what-should-we-do-about-it">What should we do about it?</h2>
+<p>Most problematic packages are related to old versions of elm, but not all (the last two are 0.19 packages with a syntax issue in their elm.json).
+Maybe all problematic packages should be removed from the package registry to prevent projects from depending on them since it is still possible to create elm 0.18 projects.
+What do you think? (Ultimately it’s Evan’s decision anyway).</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

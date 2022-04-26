@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Projects - SpanDeX</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">SpanDeX</h1>
+
+<p class="subtitle is-5">
+<em>Thomas Forgione, Matthieu Le Boucher, Matthieu Pizenberg</em><br>
+An attempt to make a modern alternative to LaTeX<br>
+2019<br>
+</p>
+
+<p>
+<span class="tag"><a href="https:&#x2F;&#x2F;rust-spandex.github.io&#x2F;">Book</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;github.com&#x2F;rust-spandex&#x2F;spandex">Code</a></span>
+
+<span class="tag"><a href="https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;spandex">Crate</a></span>
+</p>
+
+<div class="research-content content"><h3 id="tl-dr">TL;DR</h3>
+<p>SpanDeX is an attempt at a better LaTeX.
+It aims to build beautiful documents fast,
+with great error messages when compilation fails.</p>
+<h3 id="motivation">Motivation</h3>
+<p>It started with the following observations:</p>
+<ul>
+<li>LaTeX has many advantages:
+<ul>
+<li>LaTeX produces magnficient PDFs</li>
+<li>LaTeX displays beautiful mathematic formulas</li>
+<li>LaTeX has a really nice justification algorithm</li>
+<li>LaTeX is widely used, especially in science</li>
+</ul>
+</li>
+<li>but it also have major problems
+<ul>
+<li>LaTeX compilation is extremely verbose</li>
+<li>Debugging LaTeX code is really painful</li>
+<li>LaTeX packages and dependencies are a mess</li>
+</ul>
+</li>
+</ul>
+<p>After experiencing languages with great error messages such as Rust or Elm,
+going back to other languages such as LaTeX is really painful
+and frustrating due to the lack of alternatives.
+Few open source typesetting systems exist such as
+<a href="http://patoline.org/">Patoline</a> (not very mature) and <a href="http://sile-typesetter.org/">Sile</a>,
+but it will be more fun to make one of our own in Rust.
+There exists already some Rust crates to generate pdf documents,
+such as <a href="https://crates.io/crates/pdf-canvas">pdf-canvas</a> and <a href="https://crates.io/crates/printpdf">printpdf</a> that we are using.</p>
+<h3 id="language">Language</h3>
+<p>Of course, if we want to rewrite LaTeX, we need a language.
+For now, we chose to make a markdown-like language,
+and maybe in the future, extend it with template-style syntax.
+Currently, a typical SpanDeX source code looks like follows.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Hello world
+</span><span>
+</span><span>Lorem ipsum dolor sit amet, *consectetur* adipisicing elit,
+</span><span>sed do eiusmod tempor incididunt ut /labore et dolore magna
+</span><span>aliqua/. Ut enim ad minim veniam, quis nostrud exercitation
+</span><span>ullamco laboris nisi ut aliquip ex ea commodo consequat.
+</span><span>/*Duis aute irure dolor*/ in reprehenderit in voluptate
+</span><span>velit esse cillum dolore eu fugiat nulla pariatur.
+</span><span>*Excepteur sint occaecat* cupidatat non proident, sunt in
+</span><span>culpa qui officia deserunt mollit anim id est laborum.
+</span><span>Lorem ipsum dolor sit amet, *consectetur* adipisicing elit.
+</span><span>
+</span><span>
+</span><span>## Hello again
+</span><span>
+</span><span>Lorem ipsum dolor sit amet, *consectetur* adipisicing elit,
+</span><span>sed do eiusmod tempor incididunt ut /labore et dolore magna
+</span><span>aliqua/. Ut enim ad minim veniam, quis nostrud exercitation
+</span><span>ullamco laboris nisi ut aliquip ex ea commodo consequat.
+</span></code></pre>
+<p>And is rendered as follows.</p>
+<p><img src="spandex.png" alt="" /></p>
+<h3 id="try-it">Try it</h3>
+<p>All the instructions are available on the <a href="https://rust-spandex.github.io/">homepage</a>.
+Briefly, you need to:</p>
+<ul>
+<li>install rust (<code>curl -sSf https://sh.rustup.rs | sh</code>)</li>
+<li>install spandex (<code>cargo install spandex</code>)</li>
+<li>initialize a project (<code>spandex init example</code>)</li>
+<li>go to the generated example (<code>cd example</code>)</li>
+<li>build the pdf (<code>spandex build</code>)</li>
+</ul>
+<p>The output will be saved to <code>output.pdf</code>.
+You can play with the <code>main.dex</code> file and re-run <code>spandex build</code>.</p>
+<h3 id="long-term-future">Long term future</h3>
+<p>Some basic features will need to be supported such as
+includes, lists, code blocks, maths and images.
+Here are some features that we would also like to have on the long term:</p>
+<ul>
+<li>vector graphics like TikZ, or ability to include SVG</li>
+<li>ability to write plugins in Rust / WebAssembly</li>
+<li>parallel compilation</li>
+<li>incremental compilation</li>
+<li>online editor using</li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>

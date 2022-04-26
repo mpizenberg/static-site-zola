@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>@Piz - Posts - Elm-test-rs v2.0 is out, now able to run your Lamdera tests</title>
+		<link rel="stylesheet" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/main.css">
+		<link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css">
+	</head>
+
+	<body>
+		
+	
+
+<nav class="navbar is-primary has-text-weight-bold is-size-5" role="navigation" aria-label="main navigation">
+	<div class="navbar-brand">
+		<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/about-me/">@Piz</a>
+	</div>
+	<div class="navbar-menu is-active">
+		<div class="navbar-start">
+		</div>
+		<div class="navbar-end">
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/videos&#x2F;">Videos</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/posts&#x2F;">Posts</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/projects&#x2F;">Projects</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/research&#x2F;">Research</a>
+			
+			
+				
+			
+			<a class="navbar-item" href="https:&#x2F;&#x2F;matthieu.pizenberg.fr/hire-me&#x2F;">Hire me</a>
+			
+		</div>
+	</div>
+</nav>
+
+		
+
+
+
+<section class="section">
+<div class="container">
+<div class="columns is-centered">
+<div class="column is-7-widescreen is-8-desktop is-10-tablet">
+<h1 class="title is-4">Elm-test-rs v2.0 is out, now able to run your Lamdera tests</h1>
+
+<p class="subtitle is-5">
+2021-12-02<br>
+</p>
+
+<div class="content"><p>You can download v2.0 in the <a href="https://github.com/mpizenberg/elm-test-rs/releases">release page</a>, or via the latest version of <a href="https://elm-tooling.github.io/elm-tooling-cli/">elm-tooling-cli</a> (thanks <a href="https://discourse.elm-lang.org/u/lydell">@lydell</a>).</p>
+<p>Much like elm-test, elm-test-rs is a tests runner for your elm tests. Runtime performances of the two are roughly the same, but elm-test-rs provides a few unique features, such as <code>Debug.log</code> capture, tests filtering, ability to run on Deno, and a few other things. Check out the <a href="https://github.com/mpizenberg/elm-test-rs">readme</a> if you’re interested in all the features.</p>
+<span id="continue-reading"></span>
+<p>In version 2.0, the dependency solver has been upgraded to be compatible with <a href="https://lamdera.com/">Lamdera</a> projects. Previously, elm-test-rs had two strictly separated modes, an offline mode and an online mode. Offline mode would be able to pick up dependencies living in <code>ELM_HOME</code>, while online mode would pick up dependencies existing according to the package website. So online mode could not work with lamdera projects, and offline mode could not work if at least one test dependency was missing from the elm home local cache. This is now fixed with the online mode being able to combine existing dependencies listed on the package website (no lamdera) and those existing locally. The only thing needed to have elm-test-rs working with your lamdera packages is to have compiled at least once your lamdera project to get the lamdera packages in your local cache.</p>
+<p>There are a few other changes in this version, the detail is available in the <a href="https://github.com/mpizenberg/elm-test-rs/blob/v2.0/CHANGELOG.md">changelog</a>. Big thanks to Julian Antonielli who is a new contributor for this release!</p>
+<h2 id="roadmap">Roadmap</h2>
+<p>The elm-test-rs test runner is mainly developed on my free time, free time that is highly disputed with other side projects and time spent with friends and family. As such, I do not have a clear roadmap or any deadline in mind since I cannot predict when I’ll have both the time and desire to make progress here. However I can outline the priorities for this project.</p>
+<ol>
+<li>Be usable with the latest version of Elm. This means when a new version of elm is released, which becomes incompatible, my priority will be to update elm-test-rs as soon as possible.</li>
+<li>Be reactive to answer user requests and bugs. If those are easy fixes, do it or outline the fix idea for a PR. If those are not easy fixes, either try explaining why they would take some time, or why they won’t be done.</li>
+<li>Try some cool new ideas that would improve user experience and ease of use.</li>
+</ol>
+<p>Something I’d also love is to have enough community members familiar with the code base of elm-test-rs, that I could eventually fully delegate the project to others I trust. As such, all contributions, be it bug reports, ideas, and of course pull requests, are welcome. Everyone should feel welcome in this project, and I shall change anything going against this.</p>
+<h2 id="cool-new-ideas">Cool new ideas</h2>
+<h4 id="language-server-integration">Language server integration</h4>
+<p>In order to improve user experience in IDEs, we’ve started discussions with the language server maintainers to try an integration of elm-test-rs. There was some challenges, and some of them have been fixed in this v2.0 release but we are not finished yet. There would be some interesting speed advantages to check that the tests compile since elm-test-rs does not start a Node runtime before actually running the tests. Not much gains regarding actual tests running however since this takes roughly the same time.</p>
+<h4 id="web-runner-and-report">Web runner and report</h4>
+<p>Currently, elm-test-rs supports both Node and Deno runtimes. In the future, I’d like to also have a Web runtime, which would enable running Elm tests without even needing an installation of Node or Deno, just have a compatible Web Browser. The actual JS code for the runner should be very similar to Deno, so there would not be a need for a ton of work there I think. However, there would be quite some work around the communication between elm-test-rs and the browser, on the reports, and on the watch mode.</p>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+	</body>
+</html>
